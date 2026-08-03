@@ -320,40 +320,42 @@ export default function Projects() {
         </div>
       ) : (
         /* LIST VIEW */
-        <div style={{ backgroundColor: C.card, border: `1px solid ${C.border}`, borderRadius: '16px', overflow: 'hidden' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: '40px 2fr 1fr 130px 120px 120px', gap: '16px', padding: '14px 22px', borderBottom: `1px solid ${C.border}`, backgroundColor: C.card2, alignItems: 'center' }}>
-            <input type="checkbox" onChange={() => toggleAll(visibleIds)} checked={visibleIds.length > 0 && visibleIds.every(id => selected.includes(id))} style={{ width: '16px', height: '16px', cursor: 'pointer', accentColor: C.primary }} />
-            {['Project', 'Client', 'Progress', 'Deadline', 'Status'].map(h => (
-              <p key={h} style={{ color: C.muted2, fontSize: '11px', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px', margin: 0 }}>{h}</p>
-            ))}
-          </div>
-          {filtered.map((p, i) => {
-            const st = statusCfg(p.status);
-            const isSelected = selected.includes(p.id);
-            return (
-              <div key={p.id} style={{
-                display: 'grid', gridTemplateColumns: '40px 2fr 1fr 130px 120px 120px', gap: '16px',
-                padding: '14px 22px', borderBottom: i < filtered.length - 1 ? `1px solid ${C.border}` : 'none',
-                alignItems: 'center', backgroundColor: isSelected ? 'rgba(0,240,255,0.04)' : 'transparent',
-                transition: 'background-color 0.15s'
-              }}>
-                <input type="checkbox" checked={isSelected} onChange={() => toggleSelect(p.id)} style={{ width: '16px', height: '16px', cursor: 'pointer', accentColor: C.primary }} />
-                <div>
-                  <a href={`/admin/projects/${p.id}`} style={{ color: C.text, fontSize: '13.5px', fontWeight: '600' }}>{p.name}</a>
-                  <p style={{ color: C.muted, fontSize: '11px', margin: '2px 0 0' }}>{p.service_type || 'General'}</p>
-                </div>
-                <p style={{ color: C.muted, fontSize: '13px', margin: 0 }}>{p.client_name || '—'}</p>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <div style={{ flex: 1, height: '5px', borderRadius: '99px', backgroundColor: C.card3, overflow: 'hidden' }}>
-                    <div style={{ height: '100%', width: `${p.progress}%`, background: `linear-gradient(90deg, ${C.greenDark}, ${C.green})`, borderRadius: '99px' }} />
+        <div className="table-responsive">
+          <div style={{ backgroundColor: C.card, border: `1px solid ${C.border}`, borderRadius: '16px', overflow: 'hidden', minWidth: '800px' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '40px 2fr 1fr 130px 120px 120px', gap: '16px', padding: '14px 22px', borderBottom: `1px solid ${C.border}`, backgroundColor: C.card2, alignItems: 'center' }}>
+              <input type="checkbox" onChange={() => toggleAll(visibleIds)} checked={visibleIds.length > 0 && visibleIds.every(id => selected.includes(id))} style={{ width: '16px', height: '16px', cursor: 'pointer', accentColor: C.primary }} />
+              {['Project', 'Client', 'Progress', 'Deadline', 'Status'].map(h => (
+                <p key={h} style={{ color: C.muted2, fontSize: '11px', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px', margin: 0 }}>{h}</p>
+              ))}
+            </div>
+            {filtered.map((p, i) => {
+              const st = statusCfg(p.status);
+              const isSelected = selected.includes(p.id);
+              return (
+                <div key={p.id} style={{
+                  display: 'grid', gridTemplateColumns: '40px 2fr 1fr 130px 120px 120px', gap: '16px',
+                  padding: '14px 22px', borderBottom: i < filtered.length - 1 ? `1px solid ${C.border}` : 'none',
+                  alignItems: 'center', backgroundColor: isSelected ? 'rgba(0,240,255,0.04)' : 'transparent',
+                  transition: 'background-color 0.15s'
+                }}>
+                  <input type="checkbox" checked={isSelected} onChange={() => toggleSelect(p.id)} style={{ width: '16px', height: '16px', cursor: 'pointer', accentColor: C.primary }} />
+                  <div>
+                    <a href={`/admin/projects/${p.id}`} style={{ color: C.text, fontSize: '13.5px', fontWeight: '600' }}>{p.name}</a>
+                    <p style={{ color: C.muted, fontSize: '11px', margin: '2px 0 0' }}>{p.service_type || 'General'}</p>
                   </div>
-                  <span style={{ color: C.muted, fontSize: '11.5px', fontWeight: '700', flexShrink: 0 }}>{p.progress}%</span>
+                  <p style={{ color: C.muted, fontSize: '13px', margin: 0 }}>{p.client_name || '—'}</p>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <div style={{ flex: 1, height: '5px', borderRadius: '99px', backgroundColor: C.card3, overflow: 'hidden' }}>
+                      <div style={{ height: '100%', width: `${p.progress}%`, background: `linear-gradient(90deg, ${C.greenDark}, ${C.green})`, borderRadius: '99px' }} />
+                    </div>
+                    <span style={{ color: C.muted, fontSize: '11.5px', fontWeight: '700', flexShrink: 0 }}>{p.progress}%</span>
+                  </div>
+                  <span style={{ color: C.muted, fontSize: '12px', fontWeight: '600' }}>{p.end_date ? new Date(p.end_date).toLocaleDateString() : '—'}</span>
+                  <span style={{ backgroundColor: st.bg, color: st.color, fontSize: '10.5px', fontWeight: '700', padding: '3px 9px', borderRadius: '20px', width: 'fit-content' }}>{p.status}</span>
                 </div>
-                <span style={{ color: C.muted, fontSize: '12px', fontWeight: '600' }}>{p.end_date ? new Date(p.end_date).toLocaleDateString() : '—'}</span>
-                <span style={{ backgroundColor: st.bg, color: st.color, fontSize: '10.5px', fontWeight: '700', padding: '3px 9px', borderRadius: '20px', width: 'fit-content' }}>{p.status}</span>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
       )}
       <style>{`@keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }`}</style>

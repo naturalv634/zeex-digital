@@ -219,7 +219,7 @@ export default function AdminDashboard() {
       </div>
 
       {/* ── ROW 2: Charts ─────────────────────────────── */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1.6fr 1fr', gap: '16px', marginBottom: '20px' }}>
+      <div className="two-col-layout" style={{ display: 'grid', gridTemplateColumns: '1.6fr 1fr', gap: '16px', marginBottom: '20px' }}>
 
         {/* Bar Chart */}
         <div style={{ backgroundColor: C.card, border: `1px solid ${C.border}`, borderRadius: '16px', padding: '22px', backdropFilter: 'blur(10px)', boxShadow: '0 4px 20px rgba(0,0,0,0.4), inset 0 0 0 1px rgba(255,255,255,0.02)' }}>
@@ -314,7 +314,7 @@ export default function AdminDashboard() {
       </div>
 
       {/* ── ROW 2.5: Advanced Analytics (Revenue & Productivity) ── */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '20px' }}>
+      <div className="two-col-layout" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '20px' }}>
         
         {/* Weekly Time Logged (Productivity) */}
         <div style={{ backgroundColor: C.card, border: `1px solid ${C.border}`, borderRadius: '16px', padding: '22px', backdropFilter: 'blur(10px)', boxShadow: '0 4px 20px rgba(0,0,0,0.4), inset 0 0 0 1px rgba(255,255,255,0.02)' }}>
@@ -387,7 +387,7 @@ export default function AdminDashboard() {
       </div>
 
       {/* ── ROW 3: Deadlines + Performers + Activity ── */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1.1fr', gap: '16px', marginBottom: '20px' }}>
+      <div className="card-grid-3" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px', marginBottom: '20px' }}>
 
         {/* Upcoming Deadlines */}
         <div style={{ backgroundColor: C.card, border: `1px solid ${C.border}`, borderRadius: '16px', padding: '22px', backdropFilter: 'blur(10px)', boxShadow: '0 4px 20px rgba(0,0,0,0.4), inset 0 0 0 1px rgba(255,255,255,0.02)' }}>
@@ -495,33 +495,35 @@ export default function AdminDashboard() {
             <p style={{ color: C.muted, fontSize: '13.5px' }}>No projects yet. <a href="/admin/projects/new" style={{ color: C.green }}>Create your first project →</a></p>
           </div>
         ) : (
-          <div>
-            {/* Header */}
-            <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 100px 110px', gap: '16px', padding: '0 0 10px 0', borderBottom: `1px solid ${C.border}`, marginBottom: '4px' }}>
-              {['Project', 'Client', 'Progress', 'Status'].map(h => (
-                <p key={h} style={{ color: C.muted2, fontSize: '11px', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px', margin: 0 }}>{h}</p>
-              ))}
-            </div>
-            {projects.slice(0, 6).map((p, i) => {
-              const sColor = p.status === 'Completed' ? C.green : p.status === 'On Hold' ? C.red : p.status === 'Under Review' ? C.orange : C.blue;
-              const sBg    = p.status === 'Completed' ? 'rgba(0,214,143,0.1)' : p.status === 'On Hold' ? 'rgba(255,107,107,0.1)' : p.status === 'Under Review' ? 'rgba(255,184,0,0.1)' : 'rgba(78,155,255,0.1)';
-              return (
-                <div key={p.id} style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 100px 110px', gap: '16px', padding: '14px 0', borderBottom: i < Math.min(5, projects.length - 1) ? `1px solid ${C.border}` : 'none', alignItems: 'center' }}>
-                  <a href={`/admin/projects/${p.id}`} style={{ color: C.text, fontSize: '13.5px', fontWeight: '600', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}
-                    onMouseEnter={e => e.currentTarget.style.color = C.green}
-                    onMouseLeave={e => e.currentTarget.style.color = C.text}
-                  >{p.name}</a>
-                  <p style={{ color: C.muted, fontSize: '12.5px', margin: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{p.client_name || '—'}</p>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <div style={{ flex: 1, height: '5px', borderRadius: '99px', backgroundColor: C.card3, overflow: 'hidden' }}>
-                      <div style={{ height: '100%', width: `${p.progress}%`, background: `linear-gradient(90deg, ${C.greenDark}, ${C.green})`, borderRadius: '99px' }} />
+          <div className="table-responsive">
+            <div style={{ minWidth: '600px' }}>
+              {/* Header */}
+              <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 100px 110px', gap: '16px', padding: '0 0 10px 0', borderBottom: `1px solid ${C.border}`, marginBottom: '4px' }}>
+                {['Project', 'Client', 'Progress', 'Status'].map(h => (
+                  <p key={h} style={{ color: C.muted2, fontSize: '11px', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px', margin: 0 }}>{h}</p>
+                ))}
+              </div>
+              {projects.slice(0, 6).map((p, i) => {
+                const sColor = p.status === 'Completed' ? C.green : p.status === 'On Hold' ? C.red : p.status === 'Under Review' ? C.orange : C.blue;
+                const sBg    = p.status === 'Completed' ? 'rgba(0,214,143,0.1)' : p.status === 'On Hold' ? 'rgba(255,107,107,0.1)' : p.status === 'Under Review' ? 'rgba(255,184,0,0.1)' : 'rgba(78,155,255,0.1)';
+                return (
+                  <div key={p.id} style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 100px 110px', gap: '16px', padding: '14px 0', borderBottom: i < Math.min(5, projects.length - 1) ? `1px solid ${C.border}` : 'none', alignItems: 'center' }}>
+                    <a href={`/admin/projects/${p.id}`} style={{ color: C.text, fontSize: '13.5px', fontWeight: '600', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}
+                      onMouseEnter={e => e.currentTarget.style.color = C.green}
+                      onMouseLeave={e => e.currentTarget.style.color = C.text}
+                    >{p.name}</a>
+                    <p style={{ color: C.muted, fontSize: '12.5px', margin: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{p.client_name || '—'}</p>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <div style={{ flex: 1, height: '5px', borderRadius: '99px', backgroundColor: C.card3, overflow: 'hidden' }}>
+                        <div style={{ height: '100%', width: `${p.progress}%`, background: `linear-gradient(90deg, ${C.greenDark}, ${C.green})`, borderRadius: '99px' }} />
+                      </div>
+                      <span style={{ color: C.muted, fontSize: '11.5px', fontWeight: '700', width: '32px', flexShrink: 0 }}>{p.progress}%</span>
                     </div>
-                    <span style={{ color: C.muted, fontSize: '11.5px', fontWeight: '700', width: '32px', flexShrink: 0 }}>{p.progress}%</span>
+                    <span style={{ backgroundColor: sBg, color: sColor, fontSize: '11px', fontWeight: '700', padding: '4px 10px', borderRadius: '20px', width: 'fit-content' }}>{p.status}</span>
                   </div>
-                  <span style={{ backgroundColor: sBg, color: sColor, fontSize: '11px', fontWeight: '700', padding: '4px 10px', borderRadius: '20px', width: 'fit-content' }}>{p.status}</span>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
         )}
       </div>

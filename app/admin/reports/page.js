@@ -114,7 +114,7 @@ export default function ReportsPage() {
       </div>
 
       {/* Top KPIs */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: '16px', marginBottom: '24px' }}>
+      <div className="kpi-grid-4" style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: '16px', marginBottom: '24px' }}>
         {[
           { label: 'Total Projects',    value: stats?.totalProjects || '0',   icon: FolderKanban, color: C.blue,   sub: 'Active & archived' },
           { label: 'Team Members',      value: stats?.totalMembers  || '0',   icon: Users,        color: C.purple, sub: 'Across all projects' },
@@ -146,7 +146,7 @@ export default function ReportsPage() {
       )}
 
       {/* Row 1: Weekly Hours + Task Breakdown */}
-      <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '20px', marginBottom: '20px' }}>
+      <div className="two-col-layout" style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '20px', marginBottom: '20px' }}>
         {/* Weekly Hours Area Chart */}
         <div style={{ backgroundColor: C.card, border: `1px solid ${C.border}`, borderRadius: '16px', padding: '20px' }}>
           <p style={{ color: C.text, fontSize: '14px', fontWeight: '700', margin: '0 0 4px' }}>Weekly Hours Logged</p>
@@ -197,7 +197,7 @@ export default function ReportsPage() {
       </div>
 
       {/* Row 2: Hours by Project + Hours by Member */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginBottom: '20px' }}>
+      <div className="two-col-layout" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginBottom: '20px' }}>
         {/* Hours by Project */}
         <div style={{ backgroundColor: C.card, border: `1px solid ${C.border}`, borderRadius: '16px', padding: '20px' }}>
           <p style={{ color: C.text, fontSize: '14px', fontWeight: '700', margin: '0 0 18px' }}>Hours by Project</p>
@@ -255,7 +255,7 @@ export default function ReportsPage() {
       </div>
 
       {/* Row 3: Invoices Summary + Milestones */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+      <div className="two-col-layout" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
         {/* Invoice Summary Table */}
         <div style={{ backgroundColor: C.card, border: `1px solid ${C.border}`, borderRadius: '16px', padding: '20px' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>

@@ -88,9 +88,9 @@ export default function ClientPortal() {
         <main style={{ padding: '32px', maxWidth: '1000px', margin: '0 auto' }} className="fade-in">
 
           {/* Client Hero Banner */}
-          <div style={{
+          <div className="two-col-layout" style={{
             backgroundColor: C.card, border: `1px solid ${C.border}`, borderRadius: '20px',
-            padding: '28px 32px', marginBottom: '24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+            padding: '28px 32px', marginBottom: '24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '16px',
           }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '18px' }}>
               <div style={{ width: '60px', height: '60px', borderRadius: '16px', background: `linear-gradient(135deg, ${C.primaryDark}, ${C.primary})`, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#FFFFFF', fontWeight: '900', fontSize: '24px', boxShadow: '0 4px 14px rgba(79,70,229,0.3)' }}>
@@ -165,7 +165,7 @@ export default function ClientPortal() {
                 {/* Milestones Tracker */}
                 <div style={{ marginBottom: '20px' }}>
                   <h4 style={{ color: C.text, fontSize: '13.5px', fontWeight: '700', marginBottom: '12px' }}>Project Milestones</h4>
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '8px' }}>
+                  <div className="kpi-grid-3" style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '8px' }}>
                     {milestones.map((m, idx) => (
                       <div key={m.name} style={{ backgroundColor: m.done ? 'rgba(0,214,143,0.08)' : C.card2, border: `1px solid ${m.done ? C.green : C.border}`, borderRadius: '10px', padding: '10px', textAlign: 'center' }}>
                         <CheckCircle2 size={16} color={m.done ? C.green : C.muted2} style={{ marginBottom: '4px' }} />

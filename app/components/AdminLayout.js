@@ -250,6 +250,7 @@ export default function AdminLayout({ children, title = 'Dashboard' }) {
           }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
               <button
+                className="mobile-only"
                 onClick={() => setSidebarOpen(s => !s)}
                 style={{ background: 'none', border: 'none', cursor: 'pointer', color: C.muted, padding: '6px', display: 'flex' }}
               >

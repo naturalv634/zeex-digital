@@ -284,7 +284,7 @@ export default function Tasks() {
         </div>
       ) : (
         <DragDropContext onDragEnd={onDragEnd}>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '14px', alignItems: 'flex-start' }}>
+          <div className="kanban-board-scroll" style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '14px', alignItems: 'flex-start' }}>
             {COLUMNS.map(col => {
               const colTasks = filteredTasks.filter(t => t.status === col.key);
               return (

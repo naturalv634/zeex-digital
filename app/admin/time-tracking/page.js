@@ -166,8 +166,8 @@ export default function TimeTrackingPage() {
       `}</style>
 
       {/* Live Timer Widget */}
-      <div style={{ backgroundColor: C.card, border: `1px solid ${timerActive ? C.green : C.border}`, borderRadius: '16px', padding: '20px', marginBottom: '24px', display: 'flex', alignItems: 'center', gap: '20px', transition: 'all 0.3s' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', minWidth: '200px' }}>
+      <div className="two-col-layout" style={{ backgroundColor: C.card, border: `1px solid ${timerActive ? C.green : C.border}`, borderRadius: '16px', padding: '20px', marginBottom: '24px', display: 'flex', alignItems: 'center', gap: '20px', transition: 'all 0.3s' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', minWidth: '200px', flexShrink: 0 }}>
           <div style={{ width: '46px', height: '46px', borderRadius: '12px', backgroundColor: timerActive ? `${C.green}20` : `${C.muted}20`, display: 'flex', alignItems: 'center', justifyContent: 'center', animation: timerActive ? 'pulseGlow 2s infinite' : 'none', flexShrink: 0 }}>
             <Timer size={24} color={timerActive ? C.green : C.muted} />
           </div>
@@ -179,7 +179,7 @@ export default function TimeTrackingPage() {
           </div>
         </div>
         
-        <div style={{ flex: 1, display: 'flex', gap: '12px', transition: 'opacity 0.3s' }}>
+        <div style={{ flex: 1, display: 'flex', gap: '12px', transition: 'opacity 0.3s', flexWrap: 'wrap' }}>
           <select value={liveForm.project_id} onChange={e => setLiveForm({ ...liveForm, project_id: e.target.value })} style={{...inp, flex: 1}}>
             <option value="">Select Project</option>
             {projects.map(p => <option key={p.id} value={p.id}>{p.name}</option>)}
@@ -214,7 +214,7 @@ export default function TimeTrackingPage() {
       </div>
 
       {/* KPI Cards */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: '16px', marginBottom: '24px' }}>
+      <div className="kpi-grid-4" style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: '16px', marginBottom: '24px' }}>
         {[
           { label: 'Total Hours Logged', value: `${parseFloat(totalHours).toFixed(1)}h`, icon: Clock, color: C.green, sub: 'All time' },
           { label: 'This Week', value: `${parseFloat(thisWeekHrs).toFixed(1)}h`, icon: Timer, color: C.blue, sub: 'Last 7 days' },
@@ -235,7 +235,7 @@ export default function TimeTrackingPage() {
       </div>
 
       {/* Charts Row */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginBottom: '24px' }}>
+      <div className="two-col-layout" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginBottom: '24px' }}>
         {/* Hours by Project */}
         <div style={{ backgroundColor: C.card, border: `1px solid ${C.border}`, borderRadius: '16px', padding: '20px' }}>
           <p style={{ color: C.text, fontSize: '14px', fontWeight: '700', margin: '0 0 18px' }}>Hours by Project</p>

@@ -490,3 +490,39 @@ aside {
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
+/* ── Kanban Scrolling & Utility Classes ── */
+.kanban-board-wrapper {
+  width: 100%;
+}
+
+@media (max-width: 1024px) {
+  .kanban-board-scroll {
+    overflow-x: auto !important;
+    padding-bottom: 12px;
+    display: flex !important;
+    gap: 14px !important;
+    -webkit-overflow-scrolling: touch;
+  }
+  .kanban-board-scroll > div {
+    min-width: 280px !important;
+    flex-shrink: 0 !important;
+  }
+}
+
+.desktop-only {
+  display: flex !important;
+}
+.mobile-only {
+  display: none !important;
+}
+
+@media (max-width: 768px) {
+  .desktop-only {
+    display: none !important;
+  }
+  .mobile-only {
+    display: flex !important;
+  }
+}
+
+

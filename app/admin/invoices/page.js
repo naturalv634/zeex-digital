@@ -2,7 +2,6 @@
 import { useState, useEffect } from 'react';
 import AdminLayout from '../../components/AdminLayout';
 import { FileText, Plus, Trash2, Eye, Edit2, X, Check, DollarSign, Clock, CheckCircle, AlertCircle, Send, Download } from 'lucide-react';
-import html2pdf from 'html2pdf.js';
 
 const C = {
   bg: '#030712', bg2: '#080E1E', card: '#0C1327', card2: '#121C38', card3: '#18264B',
@@ -20,11 +19,11 @@ const inp = {
 };
 
 const STATUS_CONFIG = {
-  Draft:     { color: C.muted,   bg: 'rgba(138,138,163,0.12)' },
-  Sent:      { color: C.blue,    bg: 'rgba(78,155,255,0.12)'  },
-  Paid:      { color: C.green,   bg: 'rgba(0,214,143,0.12)'   },
-  Overdue:   { color: C.red,     bg: 'rgba(255,107,107,0.12)' },
-  Cancelled: { color: C.muted2,  bg: 'rgba(90,90,114,0.12)'   },
+  Draft: { color: C.muted, bg: 'rgba(138,138,163,0.12)' },
+  Sent: { color: C.blue, bg: 'rgba(78,155,255,0.12)' },
+  Paid: { color: C.green, bg: 'rgba(0,214,143,0.12)' },
+  Overdue: { color: C.red, bg: 'rgba(255,107,107,0.12)' },
+  Cancelled: { color: C.muted2, bg: 'rgba(90,90,114,0.12)' },
 };
 
 const EMPTY_ITEM = { description: '', quantity: 1, unit_price: 0, total: 0 };
@@ -32,11 +31,11 @@ const EMPTY_ITEM = { description: '', quantity: 1, unit_price: 0, total: 0 };
 export default function InvoicesPage() {
   const [invoices, setInvoices] = useState([]);
   const [projects, setProjects] = useState([]);
-  const [loading, setLoading]   = useState(true);
+  const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [viewModal, setViewModal] = useState(null);
   const [statusFilter, setStatusFilter] = useState('');
-  const [editId, setEditId]     = useState(null);
+  const [editId, setEditId] = useState(null);
 
   const [form, setForm] = useState({
     client_name: '', project_id: '', due_date: '', notes: '', status: 'Draft',
@@ -54,7 +53,7 @@ export default function InvoicesPage() {
       ]);
       setInvoices(Array.isArray(inv) ? inv : []);
       setProjects(Array.isArray(proj) ? proj : []);
-    } catch {}
+    } catch { }
     setLoading(false);
   };
 
@@ -77,7 +76,7 @@ export default function InvoicesPage() {
         items: full.items?.length ? full.items : [{ ...EMPTY_ITEM }],
       });
       setShowModal(true);
-    } catch {}
+    } catch { }
   };
 
   const handleItemChange = (i, field, val) => {
@@ -105,7 +104,7 @@ export default function InvoicesPage() {
       });
       setShowModal(false);
       fetchAll();
-    } catch {}
+    } catch { }
   };
 
   const handleDelete = async (id) => {
@@ -126,7 +125,7 @@ export default function InvoicesPage() {
 
   const kpis = {
     total: invoices.reduce((s, i) => s + parseFloat(i.computed_amount || i.amount || 0), 0),
-    paid:  invoices.filter(i => i.status === 'Paid').reduce((s, i) => s + parseFloat(i.computed_amount || i.amount || 0), 0),
+    paid: invoices.filter(i => i.status === 'Paid').reduce((s, i) => s + parseFloat(i.computed_amount || i.amount || 0), 0),
     pending: invoices.filter(i => ['Sent', 'Draft'].includes(i.status)).reduce((s, i) => s + parseFloat(i.computed_amount || i.amount || 0), 0),
     overdue: invoices.filter(i => i.status === 'Overdue').length,
   };
@@ -141,12 +140,12 @@ export default function InvoicesPage() {
       `}</style>
 
       {/* KPI Cards */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: '16px', marginBottom: '24px' }}>
+      <div className="kpi-grid-4" style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: '16px', marginBottom: '24px' }}>
         {[
           { label: 'Total Invoiced', value: `$${parseFloat(kpis.total).toLocaleString('en-US', { minimumFractionDigits: 0 })}`, icon: DollarSign, color: C.blue },
-          { label: 'Paid',          value: `$${parseFloat(kpis.paid).toLocaleString('en-US', { minimumFractionDigits: 0 })}`,  icon: CheckCircle, color: C.green },
-          { label: 'Pending',       value: `$${parseFloat(kpis.pending).toLocaleString('en-US', { minimumFractionDigits: 0 })}`, icon: Clock, color: C.orange },
-          { label: 'Overdue',       value: kpis.overdue, icon: AlertCircle, color: C.red },
+          { label: 'Paid', value: `$${parseFloat(kpis.paid).toLocaleString('en-US', { minimumFractionDigits: 0 })}`, icon: CheckCircle, color: C.green },
+          { label: 'Pending', value: `$${parseFloat(kpis.pending).toLocaleString('en-US', { minimumFractionDigits: 0 })}`, icon: Clock, color: C.orange },
+          { label: 'Overdue', value: kpis.overdue, icon: AlertCircle, color: C.red },
         ].map((k, i) => (
           <div key={i} style={{ backgroundColor: C.card, border: `1px solid ${C.border}`, borderRadius: '16px', padding: '20px', display: 'flex', alignItems: 'center', gap: '14px' }}>
             <div style={{ width: '46px', height: '46px', borderRadius: '12px', backgroundColor: `${k.color}18`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
@@ -383,7 +382,8 @@ export default function InvoicesPage() {
             <div style={{ padding: '16px 24px', backgroundColor: '#F8FAFC', borderBottom: '1px solid #E2E8F0', display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTopLeftRadius: '8px', borderTopRightRadius: '8px' }}>
               <span style={{ fontWeight: 'bold', color: '#1E293B', fontSize: '16px' }}>Invoice Preview</span>
               <div style={{ display: 'flex', gap: '12px' }}>
-                <button onClick={() => {
+                <button onClick={async () => {
+                  const { default: html2pdf } = await import('html2pdf.js');
                   const el = document.getElementById('printable-invoice');
                   html2pdf().set({
                     margin: 0,
@@ -416,8 +416,8 @@ export default function InvoicesPage() {
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '40px' }}>
                 <div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
-                     <div style={{ width: '40px', height: '40px', borderRadius: '8px', backgroundColor: '#0F172A', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#00F0FF', fontWeight: '900', fontSize: '20px' }}>Z</div>
-                     <h1 style={{ margin: 0, fontSize: '24px', fontWeight: '900', letterSpacing: '-0.5px' }}>ZEEX DIGITAL</h1>
+                    <div style={{ width: '40px', height: '40px', borderRadius: '8px', backgroundColor: '#0F172A', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#00F0FF', fontWeight: '900', fontSize: '20px' }}>Z</div>
+                    <h1 style={{ margin: 0, fontSize: '24px', fontWeight: '900', letterSpacing: '-0.5px' }}>ZEEX DIGITAL</h1>
                   </div>
                   <p style={{ margin: '4px 0', fontSize: '14px', color: '#475569' }}>123 Tech Avenue</p>
                   <p style={{ margin: '4px 0', fontSize: '14px', color: '#475569' }}>Innovation City, TX 75001</p>
@@ -432,17 +432,17 @@ export default function InvoicesPage() {
               </div>
 
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '40px', padding: '20px', backgroundColor: '#F8FAFC', borderRadius: '8px' }}>
-                 <div>
-                   <p style={{ margin: '0 0 8px', fontSize: '12px', fontWeight: 'bold', textTransform: 'uppercase', color: '#64748B' }}>Billed To</p>
-                   <p style={{ margin: '0 0 4px', fontSize: '16px', fontWeight: 'bold' }}>{viewModal.client_name}</p>
-                   {viewModal.project_name && <p style={{ margin: '0', fontSize: '14px', color: '#475569' }}>Project: {viewModal.project_name}</p>}
-                 </div>
-                 <div style={{ textAlign: 'right' }}>
-                   <p style={{ margin: '0 0 8px', fontSize: '12px', fontWeight: 'bold', textTransform: 'uppercase', color: '#64748B' }}>Amount Due</p>
-                   <p style={{ margin: '0', fontSize: '24px', fontWeight: '900', color: C.blue }}>
-                      ${parseFloat(viewModal.computed_amount || viewModal.amount || 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                   </p>
-                 </div>
+                <div>
+                  <p style={{ margin: '0 0 8px', fontSize: '12px', fontWeight: 'bold', textTransform: 'uppercase', color: '#64748B' }}>Billed To</p>
+                  <p style={{ margin: '0 0 4px', fontSize: '16px', fontWeight: 'bold' }}>{viewModal.client_name}</p>
+                  {viewModal.project_name && <p style={{ margin: '0', fontSize: '14px', color: '#475569' }}>Project: {viewModal.project_name}</p>}
+                </div>
+                <div style={{ textAlign: 'right' }}>
+                  <p style={{ margin: '0 0 8px', fontSize: '12px', fontWeight: 'bold', textTransform: 'uppercase', color: '#64748B' }}>Amount Due</p>
+                  <p style={{ margin: '0', fontSize: '24px', fontWeight: '900', color: C.blue }}>
+                    ${parseFloat(viewModal.computed_amount || viewModal.amount || 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                  </p>
+                </div>
               </div>
 
               <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '40px' }}>
