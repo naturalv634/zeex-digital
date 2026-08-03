@@ -2,7 +2,6 @@
 import { useState, useEffect } from 'react';
 import AdminLayout from '../../components/AdminLayout';
 import { FileText, Plus, Trash2, Eye, Edit2, X, Check, DollarSign, Clock, CheckCircle, AlertCircle, Send, Download } from 'lucide-react';
-import html2pdf from 'html2pdf.js';
 
 const C = {
   bg: '#030712', bg2: '#080E1E', card: '#0C1327', card2: '#121C38', card3: '#18264B',
@@ -385,13 +384,16 @@ export default function InvoicesPage() {
               <div style={{ display: 'flex', gap: '12px' }}>
                 <button onClick={() => {
                   const el = document.getElementById('printable-invoice');
-                  html2pdf().set({
-                    margin: 0,
-                    filename: `invoice_${viewModal.invoice_number}.pdf`,
-                    image: { type: 'jpeg', quality: 0.98 },
-                    html2canvas: { scale: 2, useCORS: true },
-                    jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
-                  }).from(el).save();
+                  import('html2pdf.js').then((module) => {
+                    const html2pdf = module.default;
+                    html2pdf().set({
+                      margin: 0,
+                      filename: `invoice_${viewModal.invoice_number}.pdf`,
+                      image: { type: 'jpeg', quality: 0.98 },
+                      html2canvas: { scale: 2, useCORS: true },
+                      jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+                    }).from(el).save();
+                  });
                 }} style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '8px 16px', backgroundColor: '#10B981', color: '#FFF', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: 'bold' }}>
                   <Download size={16} /> Download PDF
                 </button>
