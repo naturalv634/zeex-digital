@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import AdminLayout from '../../components/AdminLayout';
 import { FileText, Plus, Trash2, Eye, Edit2, X, Check, DollarSign, Clock, CheckCircle, AlertCircle, Send, Download } from 'lucide-react';
+import html2pdf from 'html2pdf.js';
 
 const C = {
   bg: '#030712', bg2: '#080E1E', card: '#0C1327', card2: '#121C38', card3: '#18264B',
@@ -382,8 +383,7 @@ export default function InvoicesPage() {
             <div style={{ padding: '16px 24px', backgroundColor: '#F8FAFC', borderBottom: '1px solid #E2E8F0', display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTopLeftRadius: '8px', borderTopRightRadius: '8px' }}>
               <span style={{ fontWeight: 'bold', color: '#1E293B', fontSize: '16px' }}>Invoice Preview</span>
               <div style={{ display: 'flex', gap: '12px' }}>
-                <button onClick={async () => {
-                  const { default: html2pdf } = await import('html2pdf.js');
+                <button onClick={() => {
                   const el = document.getElementById('printable-invoice');
                   html2pdf().set({
                     margin: 0,

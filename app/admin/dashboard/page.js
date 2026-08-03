@@ -22,18 +22,18 @@ const C = {
 };
 
 const ACTIVITY_ICONS = {
-  project_created:  { Icon: FolderPlus,   color: C.green  },
-  project_updated:  { Icon: RefreshCw,    color: C.blue   },
-  progress_updated: { Icon: RefreshCw,    color: C.blue   },
-  task_assigned:    { Icon: CheckSquare,  color: C.orange },
-  task_completed:   { Icon: CheckCircle2, color: C.green  },
-  member_added:     { Icon: UserPlus,     color: C.purple },
-  client_added:     { Icon: Handshake,    color: C.blue   },
+  project_created: { Icon: FolderPlus, color: C.green },
+  project_updated: { Icon: RefreshCw, color: C.blue },
+  progress_updated: { Icon: RefreshCw, color: C.blue },
+  task_assigned: { Icon: CheckSquare, color: C.orange },
+  task_completed: { Icon: CheckCircle2, color: C.green },
+  member_added: { Icon: UserPlus, color: C.purple },
+  client_added: { Icon: Handshake, color: C.blue },
 };
 
 const timeAgo = (d) => {
   const s = Math.floor((Date.now() - new Date(d)) / 1000);
-  if (s < 60)   return 'just now';
+  if (s < 60) return 'just now';
   if (s < 3600) return `${Math.floor(s / 60)}m ago`;
   if (s < 86400) return `${Math.floor(s / 3600)}h ago`;
   return `${Math.floor(s / 86400)}d ago`;
@@ -79,13 +79,13 @@ function Skeleton({ h = 18, w = '100%', r = 8 }) {
 
 /* ── Main Dashboard ──────────────────────────────────── */
 export default function AdminDashboard() {
-  const [stats,    setStats]    = useState(null);
+  const [stats, setStats] = useState(null);
   const [projects, setProjects] = useState([]);
   const [activity, setActivity] = useState([]);
-  const [members,  setMembers]  = useState([]);
-  const [loading,  setLoading]  = useState(true);
-  const [tasks,    setTasks]    = useState([]);
-  const [reports,  setReports]  = useState(null);
+  const [members, setMembers] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [tasks, setTasks] = useState([]);
+  const [reports, setReports] = useState(null);
 
   useEffect(() => { fetchAll(); }, []);
 
@@ -133,16 +133,16 @@ export default function AdminDashboard() {
   const memberTaskCount = members.map(m => ({
     ...m,
     completed: tasks.filter(t => t.member_id === m.id && t.status === 'Completed').length,
-    total:     tasks.filter(t => t.member_id === m.id).length,
+    total: tasks.filter(t => t.member_id === m.id).length,
   })).sort((a, b) => b.completed - a.completed).slice(0, 4);
 
   // Task status breakdown
   const taskBreakdown = [
-    { label: 'Pending',     color: C.muted,  count: tasks.filter(t => t.status === 'Pending').length },
-    { label: 'In Progress', color: C.blue,   count: tasks.filter(t => t.status === 'In Progress').length },
-    { label: 'Under Review',color: C.orange, count: tasks.filter(t => t.status === 'Under Review').length },
-    { label: 'Completed',   color: C.green,  count: tasks.filter(t => t.status === 'Completed').length },
-    { label: 'Blocked',     color: C.red,    count: tasks.filter(t => t.status === 'Blocked').length },
+    { label: 'Pending', color: C.muted, count: tasks.filter(t => t.status === 'Pending').length },
+    { label: 'In Progress', color: C.blue, count: tasks.filter(t => t.status === 'In Progress').length },
+    { label: 'Under Review', color: C.orange, count: tasks.filter(t => t.status === 'Under Review').length },
+    { label: 'Completed', color: C.green, count: tasks.filter(t => t.status === 'Completed').length },
+    { label: 'Blocked', color: C.red, count: tasks.filter(t => t.status === 'Blocked').length },
   ];
 
   const overdue = tasks.filter(t => t.due_date && daysLeft(t.due_date) < 0 && t.status !== 'Completed');
@@ -169,15 +169,15 @@ export default function AdminDashboard() {
           <p style={{ color: C.muted, fontSize: '13px', margin: '0 0 20px 0' }}>
             {overdue.length > 0 && <span style={{ color: C.red, fontWeight: '700' }}>{overdue.length} overdue tasks · </span>}
             <span style={{ color: C.orange, fontWeight: '700' }}>{upcoming.length} deadlines</span> coming up ·{' '}
-            <span style={{ color: C.green, fontWeight: '700' }}>{projects.filter(p=>p.status==='In Progress').length} projects</span> in progress
+            <span style={{ color: C.green, fontWeight: '700' }}>{projects.filter(p => p.status === 'In Progress').length} projects</span> in progress
           </p>
           {/* Quick Actions */}
           <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
             {[
-              { label: 'New Project',  icon: FolderPlus, href: '/admin/projects/new',  color: C.primary,     bg: 'rgba(0,240,255,0.12)',  border: 'rgba(0,240,255,0.25)' },
-              { label: 'Add Task',     icon: CheckSquare, href: '/admin/tasks',          color: C.green,       bg: 'rgba(0,229,153,0.1)',   border: 'rgba(0,229,153,0.2)'  },
-              { label: 'Add Member',   icon: UserPlus,    href: '/admin/members/new',    color: C.purple,      bg: 'rgba(157,78,221,0.1)',  border: 'rgba(157,78,221,0.2)' },
-              { label: 'Add Client',   icon: Handshake,   href: '/admin/clients/new',    color: C.orange,      bg: 'rgba(255,153,0,0.1)',   border: 'rgba(255,153,0,0.2)'  },
+              { label: 'New Project', icon: FolderPlus, href: '/admin/projects/new', color: C.primary, bg: 'rgba(0,240,255,0.12)', border: 'rgba(0,240,255,0.25)' },
+              { label: 'Add Task', icon: CheckSquare, href: '/admin/tasks', color: C.green, bg: 'rgba(0,229,153,0.1)', border: 'rgba(0,229,153,0.2)' },
+              { label: 'Add Member', icon: UserPlus, href: '/admin/members/new', color: C.purple, bg: 'rgba(157,78,221,0.1)', border: 'rgba(157,78,221,0.2)' },
+              { label: 'Add Client', icon: Handshake, href: '/admin/clients/new', color: C.orange, bg: 'rgba(255,153,0,0.1)', border: 'rgba(255,153,0,0.2)' },
             ].map(({ label, icon: Icon, href, color, bg, border: bd }) => (
               <a key={label} href={href} style={{
                 display: 'flex', alignItems: 'center', gap: '7px',
@@ -198,14 +198,14 @@ export default function AdminDashboard() {
       {/* ── KPI CARDS ─────────────────────────────────── */}
       <div className="kpi-grid-4" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '16px', marginBottom: '24px' }}>
         {loading ? (
-          [0,1,2,3].map(i => <div key={i} style={{ backgroundColor: C.card, border: `1px solid ${C.border}`, borderRadius: '16px', padding: '22px' }}><Skeleton h={42} w={42} r={12} /><div style={{marginTop:14}}><Skeleton h={12} w="60%" /><Skeleton h={30} w="40%" /><Skeleton h={11} w="70%" /></div></div>)
+          [0, 1, 2, 3].map(i => <div key={i} style={{ backgroundColor: C.card, border: `1px solid ${C.border}`, borderRadius: '16px', padding: '22px' }}><Skeleton h={42} w={42} r={12} /><div style={{ marginTop: 14 }}><Skeleton h={12} w="60%" /><Skeleton h={30} w="40%" /><Skeleton h={11} w="70%" /></div></div>)
         ) : (
           <>
             <KpiCard icon={FolderKanban} label="Total Projects" value={stats?.totalProjects ?? 0}
-              sub={`${projects.filter(p=>p.status==='Completed').length} completed`}
+              sub={`${projects.filter(p => p.status === 'Completed').length} completed`}
               iconBg="rgba(78,155,255,0.12)" iconColor={C.blue} trendUp={true} trend="+12%" />
             <KpiCard icon={Users} label="Team Members" value={stats?.totalMembers ?? 0}
-              sub={`${members.filter(m=>m.status==='Active').length} active`}
+              sub={`${members.filter(m => m.status === 'Active').length} active`}
               iconBg="rgba(167,139,250,0.12)" iconColor={C.purple} trendUp={true} trend="+3" />
             <KpiCard icon={CheckSquare} label="Total Tasks" value={stats?.totalTasks ?? 0}
               sub={`${stats?.completedTasks ?? 0} completed`}
@@ -241,14 +241,14 @@ export default function AdminDashboard() {
               <AreaChart data={barData} margin={{ top: 5, right: 5, left: -25, bottom: 5 }}>
                 <defs>
                   <linearGradient id="neonGlow" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor={C.primary} stopOpacity={0.6}/>
-                    <stop offset="95%" stopColor={C.blue} stopOpacity={0}/>
+                    <stop offset="5%" stopColor={C.primary} stopOpacity={0.6} />
+                    <stop offset="95%" stopColor={C.blue} stopOpacity={0} />
                   </linearGradient>
                   <filter id="glow">
-                    <feGaussianBlur stdDeviation="3.5" result="coloredBlur"/>
+                    <feGaussianBlur stdDeviation="3.5" result="coloredBlur" />
                     <feMerge>
-                      <feMergeNode in="coloredBlur"/>
-                      <feMergeNode in="SourceGraphic"/>
+                      <feMergeNode in="coloredBlur" />
+                      <feMergeNode in="SourceGraphic" />
                     </feMerge>
                   </filter>
                 </defs>
@@ -278,10 +278,10 @@ export default function AdminDashboard() {
                 <PieChart>
                   <defs>
                     <filter id="glowPie">
-                      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+                      <feGaussianBlur stdDeviation="4" result="coloredBlur" />
                       <feMerge>
-                        <feMergeNode in="coloredBlur"/>
-                        <feMergeNode in="SourceGraphic"/>
+                        <feMergeNode in="coloredBlur" />
+                        <feMergeNode in="SourceGraphic" />
                       </feMerge>
                     </filter>
                   </defs>
@@ -315,7 +315,7 @@ export default function AdminDashboard() {
 
       {/* ── ROW 2.5: Advanced Analytics (Revenue & Productivity) ── */}
       <div className="two-col-layout" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '20px' }}>
-        
+
         {/* Weekly Time Logged (Productivity) */}
         <div style={{ backgroundColor: C.card, border: `1px solid ${C.border}`, borderRadius: '16px', padding: '22px', backdropFilter: 'blur(10px)', boxShadow: '0 4px 20px rgba(0,0,0,0.4), inset 0 0 0 1px rgba(255,255,255,0.02)' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
@@ -335,11 +335,11 @@ export default function AdminDashboard() {
             <ResponsiveContainer width="100%" height={220}>
               <BarChart data={reports.weeklyHours} margin={{ top: 5, right: 5, left: -25, bottom: 5 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke={C.border} vertical={false} opacity={0.3} />
-                <XAxis dataKey="week" tickFormatter={v => new Date(v).toLocaleDateString(undefined, {month:'short', day:'numeric'})} tick={{ fontSize: 11, fill: C.muted }} axisLine={false} tickLine={false} />
+                <XAxis dataKey="week" tickFormatter={v => new Date(v).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })} tick={{ fontSize: 11, fill: C.muted }} axisLine={false} tickLine={false} />
                 <YAxis tick={{ fontSize: 11, fill: C.muted }} axisLine={false} tickLine={false} />
                 <Tooltip
                   contentStyle={{ backgroundColor: 'rgba(5, 10, 21, 0.9)', border: `1px solid ${C.purple}`, borderRadius: '8px', fontSize: '12.5px', boxShadow: `0 0 10px ${C.purple}40` }}
-                  labelFormatter={v => new Date(v).toLocaleDateString(undefined, {month:'short', day:'numeric', year:'numeric'})}
+                  labelFormatter={v => new Date(v).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
                   itemStyle={{ color: C.text }}
                   formatter={v => [`${parseFloat(v).toFixed(1)} hrs`, 'Logged']}
                 />
@@ -398,7 +398,7 @@ export default function AdminDashboard() {
               {upcoming.length} upcoming
             </span>
           </div>
-          {loading ? [0,1,2,3].map(i=><div key={i} style={{marginBottom:12}}><Skeleton h={14} /><div style={{marginTop:5}}><Skeleton h={10} w="60%"/></div></div>) : upcoming.length === 0 ? (
+          {loading ? [0, 1, 2, 3].map(i => <div key={i} style={{ marginBottom: 12 }}><Skeleton h={14} /><div style={{ marginTop: 5 }}><Skeleton h={10} w="60%" /></div></div>) : upcoming.length === 0 ? (
             <p style={{ color: C.muted, fontSize: '13px', textAlign: 'center', padding: '30px 0' }}>No upcoming deadlines 🎉</p>
           ) : upcoming.map((p, i) => {
             const d = daysLeft(p.end_date);
@@ -424,7 +424,7 @@ export default function AdminDashboard() {
             <Award size={16} color={C.purple} strokeWidth={2.2} />
             <h3 style={{ color: C.text, fontSize: '15px', fontWeight: '700', margin: 0 }}>Top Performers</h3>
           </div>
-          {loading ? [0,1,2,3].map(i=><div key={i} style={{display:'flex',gap:10,marginBottom:12,alignItems:'center'}}><Skeleton h={36} w={36} r={18} /><div style={{flex:1}}><Skeleton h={13} /><div style={{marginTop:4}}><Skeleton h={10} w="60%"/></div></div></div>) : memberTaskCount.length === 0 ? (
+          {loading ? [0, 1, 2, 3].map(i => <div key={i} style={{ display: 'flex', gap: 10, marginBottom: 12, alignItems: 'center' }}><Skeleton h={36} w={36} r={18} /><div style={{ flex: 1 }}><Skeleton h={13} /><div style={{ marginTop: 4 }}><Skeleton h={10} w="60%" /></div></div></div>) : memberTaskCount.length === 0 ? (
             <p style={{ color: C.muted, fontSize: '13px', textAlign: 'center', padding: '30px 0' }}>No members yet</p>
           ) : memberTaskCount.map((m, i) => (
             <div key={m.id} style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '10px 0', borderBottom: i < memberTaskCount.length - 1 ? `1px solid ${C.border}` : 'none' }}>
@@ -451,7 +451,7 @@ export default function AdminDashboard() {
             <Clock size={16} color={C.green} strokeWidth={2.2} />
             <h3 style={{ color: C.text, fontSize: '15px', fontWeight: '700', margin: 0 }}>Recent Activity</h3>
           </div>
-          {loading ? [0,1,2,3,4].map(i=><div key={i} style={{display:'flex',gap:10,marginBottom:12,alignItems:'flex-start'}}><Skeleton h={30} w={30} r={9}/><div style={{flex:1}}><Skeleton h={13}/><div style={{marginTop:4}}><Skeleton h={10} w="50%"/></div></div></div>) : activity.length === 0 ? (
+          {loading ? [0, 1, 2, 3, 4].map(i => <div key={i} style={{ display: 'flex', gap: 10, marginBottom: 12, alignItems: 'flex-start' }}><Skeleton h={30} w={30} r={9} /><div style={{ flex: 1 }}><Skeleton h={13} /><div style={{ marginTop: 4 }}><Skeleton h={10} w="50%" /></div></div></div>) : activity.length === 0 ? (
             <p style={{ color: C.muted, fontSize: '13px', textAlign: 'center', padding: '30px 0' }}>No activity yet</p>
           ) : (
             <div style={{ maxHeight: '300px', overflowY: 'auto', marginRight: '-6px', paddingRight: '6px' }}>
@@ -484,8 +484,8 @@ export default function AdminDashboard() {
           </a>
         </div>
         {loading ? (
-          [0,1,2,3].map(i => <div key={i} style={{ display: 'flex', gap: '16px', padding: '14px 0', borderBottom: `1px solid ${C.border}`, alignItems: 'center' }}>
-            <div style={{ flex: 1 }}><Skeleton h={14} /><div style={{marginTop:8}}><Skeleton h={6}/></div></div>
+          [0, 1, 2, 3].map(i => <div key={i} style={{ display: 'flex', gap: '16px', padding: '14px 0', borderBottom: `1px solid ${C.border}`, alignItems: 'center' }}>
+            <div style={{ flex: 1 }}><Skeleton h={14} /><div style={{ marginTop: 8 }}><Skeleton h={6} /></div></div>
             <Skeleton h={24} w={60} />
             <Skeleton h={24} w={70} />
           </div>)
@@ -505,7 +505,7 @@ export default function AdminDashboard() {
               </div>
               {projects.slice(0, 6).map((p, i) => {
                 const sColor = p.status === 'Completed' ? C.green : p.status === 'On Hold' ? C.red : p.status === 'Under Review' ? C.orange : C.blue;
-                const sBg    = p.status === 'Completed' ? 'rgba(0,214,143,0.1)' : p.status === 'On Hold' ? 'rgba(255,107,107,0.1)' : p.status === 'Under Review' ? 'rgba(255,184,0,0.1)' : 'rgba(78,155,255,0.1)';
+                const sBg = p.status === 'Completed' ? 'rgba(0,214,143,0.1)' : p.status === 'On Hold' ? 'rgba(255,107,107,0.1)' : p.status === 'Under Review' ? 'rgba(255,184,0,0.1)' : 'rgba(78,155,255,0.1)';
                 return (
                   <div key={p.id} style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 100px 110px', gap: '16px', padding: '14px 0', borderBottom: i < Math.min(5, projects.length - 1) ? `1px solid ${C.border}` : 'none', alignItems: 'center' }}>
                     <a href={`/admin/projects/${p.id}`} style={{ color: C.text, fontSize: '13.5px', fontWeight: '600', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}
