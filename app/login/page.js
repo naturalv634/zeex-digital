@@ -13,7 +13,7 @@ export default function Login() {
     setLoading(true);
     setError('');
     try {
-      const res = await fetch('http://localhost:5000/api/auth/login', {
+      const res = await fetch('https://zeex-backend.vercel.app/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: form.email, password: form.password })
@@ -71,7 +71,7 @@ export default function Login() {
           <input
             type="email"
             value={form.email}
-            onChange={e => setForm({...form, email: e.target.value})}
+            onChange={e => setForm({ ...form, email: e.target.value })}
             placeholder="admin@zeex.com"
             style={{
               width: '100%', padding: '12px 16px',
@@ -88,7 +88,7 @@ export default function Login() {
           <input
             type="password"
             value={form.password}
-            onChange={e => setForm({...form, password: e.target.value})}
+            onChange={e => setForm({ ...form, password: e.target.value })}
             placeholder="••••••••"
             style={{
               width: '100%', padding: '12px 16px',
