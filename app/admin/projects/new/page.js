@@ -59,7 +59,7 @@ export default function NewProject() {
   const set = (k, v) => setForm(f => ({ ...f, [k]: v }));
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/clients')
+    fetch('https://zeex-digital-nftm.vercel.app/api/clients')
       .then(r => r.json())
       .then(d => { if (Array.isArray(d)) setClients(d); })
       .catch(() => {});
@@ -78,7 +78,7 @@ export default function NewProject() {
     if (!form.client_name.trim()) { toast.error('Client Name required hai!'); return; }
     setLoading(true);
     try {
-      const res = await fetch('http://localhost:5000/api/projects', {
+      const res = await fetch('https://zeex-digital-nftm.vercel.app/api/projects', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

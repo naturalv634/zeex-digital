@@ -46,14 +46,14 @@ export default function ProjectDetail() {
   const fetchData = async () => {
     try {
       const [pRes, mRes, pmRes, cRes, tRes, milRes, tlRes, filesRes] = await Promise.all([
-        fetch('http://localhost:5000/api/projects'),
-        fetch('http://localhost:5000/api/members'),
-        fetch(`http://localhost:5000/api/projects/${projectId}/members`),
-        fetch('http://localhost:5000/api/clients'),
-        fetch('http://localhost:5000/api/tasks'),
-        fetch(`http://localhost:5000/api/milestones?project_id=${projectId}`),
-        fetch(`http://localhost:5000/api/time-logs?project_id=${projectId}`),
-        fetch(`http://localhost:5000/api/projects/${projectId}/files`)
+        fetch('https://zeex-digital-nftm.vercel.app/api/projects'),
+        fetch('https://zeex-digital-nftm.vercel.app/api/members'),
+        fetch(`https://zeex-digital-nftm.vercel.app/api/projects/${projectId}/members`),
+        fetch('https://zeex-digital-nftm.vercel.app/api/clients'),
+        fetch('https://zeex-digital-nftm.vercel.app/api/tasks'),
+        fetch(`https://zeex-digital-nftm.vercel.app/api/milestones?project_id=${projectId}`),
+        fetch(`https://zeex-digital-nftm.vercel.app/api/time-logs?project_id=${projectId}`),
+        fetch(`https://zeex-digital-nftm.vercel.app/api/projects/${projectId}/files`)
       ]);
       const projectsData = await pRes.json();
       const found = projectsData.find(p => String(p.id) === String(projectId));
@@ -79,7 +79,7 @@ export default function ProjectDetail() {
 
   const handleSave = async () => {
     try {
-      const res = await fetch(`http://localhost:5000/api/projects/${projectId}`, {
+      const res = await fetch(`https://zeex-digital-nftm.vercel.app/api/projects/${projectId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form)
@@ -98,7 +98,7 @@ export default function ProjectDetail() {
   const assignMember = async () => {
     if (!selectedMember) return;
     try {
-      const res = await fetch(`http://localhost:5000/api/projects/${projectId}/members`, {
+      const res = await fetch(`https://zeex-digital-nftm.vercel.app/api/projects/${projectId}/members`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ member_id: selectedMember })
@@ -109,7 +109,7 @@ export default function ProjectDetail() {
 
   const removeMember = async (memberId) => {
     try {
-      await fetch(`http://localhost:5000/api/projects/${projectId}/members/${memberId}`, { method: 'DELETE' });
+      await fetch(`https://zeex-digital-nftm.vercel.app/api/projects/${projectId}/members/${memberId}`, { method: 'DELETE' });
       setProjectMembers(projectMembers.filter(m => m.id !== memberId));
     } catch (err) {}
   };
@@ -121,14 +121,14 @@ export default function ProjectDetail() {
     const formData = new FormData();
     formData.append('file', file);
     try {
-      const res = await fetch(`http://localhost:5000/api/projects/${projectId}/files`, {
+      const res = await fetch(`https://zeex-digital-nftm.vercel.app/api/projects/${projectId}/files`, {
         method: 'POST',
         body: formData
       });
       const data = await res.json();
       if (res.ok) {
         toast?.success('File uploaded');
-        const fRes = await fetch(`http://localhost:5000/api/projects/${projectId}/files`);
+        const fRes = await fetch(`https://zeex-digital-nftm.vercel.app/api/projects/${projectId}/files`);
         setFiles(await fRes.json());
       } else {
         toast?.error(data.error || 'Upload failed');
@@ -142,7 +142,7 @@ export default function ProjectDetail() {
   const handleDeleteFile = async (id) => {
     if (!confirm('Delete this file?')) return;
     try {
-      await fetch(`http://localhost:5000/api/files/${id}`, { method: 'DELETE' });
+      await fetch(`https://zeex-digital-nftm.vercel.app/api/files/${id}`, { method: 'DELETE' });
       setFiles(files.filter(f => f.id !== id));
       toast?.success('File deleted');
     } catch (err) {}
@@ -150,7 +150,7 @@ export default function ProjectDetail() {
 
   const assignClient = async () => {
     try {
-      const res = await fetch(`http://localhost:5000/api/projects/${projectId}/client`, {
+      const res = await fetch(`https://zeex-digital-nftm.vercel.app/api/projects/${projectId}/client`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ client_id: selectedClient || null })
@@ -319,7 +319,7 @@ export default function ProjectDetail() {
                       </div>
                     </div>
                     <div style={{ display: 'flex', gap: '8px' }}>
-                      <a href={`http://localhost:5000${f.file_path}`} target="_blank" rel="noreferrer" style={{ flex: 1, padding: '8px', backgroundColor: 'rgba(0,240,255,0.1)', color: C.primary, textAlign: 'center', borderRadius: '6px', textDecoration: 'none', fontSize: '12px', fontWeight: '700', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px' }}>
+                      <a href={`https://zeex-digital-nftm.vercel.app${f.file_path}`} target="_blank" rel="noreferrer" style={{ flex: 1, padding: '8px', backgroundColor: 'rgba(0,240,255,0.1)', color: C.primary, textAlign: 'center', borderRadius: '6px', textDecoration: 'none', fontSize: '12px', fontWeight: '700', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px' }}>
                         <Download size={12} /> Download
                       </a>
                       <button onClick={() => handleDeleteFile(f.id)} style={{ padding: '8px', backgroundColor: 'rgba(255,71,87,0.1)', color: C.red, border: 'none', borderRadius: '6px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>

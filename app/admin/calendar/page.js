@@ -28,8 +28,8 @@ export default function CalendarView() {
   const fetchData = async () => {
     try {
       const [pR, tR] = await Promise.all([
-        fetch('http://localhost:5000/api/projects'),
-        fetch('http://localhost:5000/api/tasks'),
+        fetch('https://zeex-digital-nftm.vercel.app/api/projects'),
+        fetch('https://zeex-digital-nftm.vercel.app/api/tasks'),
       ]);
       setProjects(await pR.json());
       setTasks(await tR.json());

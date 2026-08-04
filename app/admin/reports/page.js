@@ -39,8 +39,8 @@ export default function ReportsPage() {
     setLoading(true);
     try {
       const [r, s] = await Promise.all([
-        fetch('http://localhost:5000/api/reports/overview').then(res => res.json()),
-        fetch('http://localhost:5000/api/stats').then(res => res.json()),
+        fetch('https://zeex-digital-nftm.vercel.app/api/reports/overview').then(res => res.json()),
+        fetch('https://zeex-digital-nftm.vercel.app/api/stats').then(res => res.json()),
       ]);
       setData(r);
       setStats(s);

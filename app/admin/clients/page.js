@@ -27,8 +27,8 @@ export default function Clients() {
   const fetchAll = async () => {
     try {
       const [cR, pR] = await Promise.all([
-        fetch('http://localhost:5000/api/clients'),
-        fetch('http://localhost:5000/api/projects'),
+        fetch('https://zeex-digital-nftm.vercel.app/api/clients'),
+        fetch('https://zeex-digital-nftm.vercel.app/api/projects'),
       ]);
       setClients(await cR.json());
       setProjects(await pR.json());
@@ -39,7 +39,7 @@ export default function Clients() {
   const deleteClient = async (id, name) => {
     if (!confirm(`Delete client "${name}"? This will remove all their data.`)) return;
     try {
-      const res = await fetch(`http://localhost:5000/api/clients/${id}`, { method: 'DELETE' });
+      const res = await fetch(`https://zeex-digital-nftm.vercel.app/api/clients/${id}`, { method: 'DELETE' });
       const d   = await res.json();
       if (d.success) { toast.success(`"${name}" deleted successfully`); fetchAll(); }
       else toast.error(d.error || 'Delete failed');

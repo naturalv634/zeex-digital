@@ -92,12 +92,12 @@ export default function AdminDashboard() {
   const fetchAll = async () => {
     try {
       const [sR, pR, aR, mR, tR, repR] = await Promise.all([
-        fetch('http://localhost:5000/api/stats'),
-        fetch('http://localhost:5000/api/projects'),
-        fetch('http://localhost:5000/api/activity?limit=10'),
-        fetch('http://localhost:5000/api/members'),
-        fetch('http://localhost:5000/api/tasks'),
-        fetch('http://localhost:5000/api/reports/overview'),
+        fetch('https://zeex-digital-nftm.vercel.app/api/stats'),
+        fetch('https://zeex-digital-nftm.vercel.app/api/projects'),
+        fetch('https://zeex-digital-nftm.vercel.app/api/activity?limit=10'),
+        fetch('https://zeex-digital-nftm.vercel.app/api/members'),
+        fetch('https://zeex-digital-nftm.vercel.app/api/tasks'),
+        fetch('https://zeex-digital-nftm.vercel.app/api/reports/overview'),
       ]);
       const [s, p, a, m, t, rep] = await Promise.all([sR.json(), pR.json(), aR.json(), mR.json(), tR.json(), repR.json()]);
       setStats(s); setProjects(Array.isArray(p) ? p : []);

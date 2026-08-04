@@ -34,8 +34,8 @@ export default function ClientPortal() {
   const fetchData = async () => {
     try {
       const [cR, pR] = await Promise.all([
-        fetch('http://localhost:5000/api/clients'),
-        fetch(`http://localhost:5000/api/clients/${clientId}/projects`),
+        fetch('https://zeex-digital-nftm.vercel.app/api/clients'),
+        fetch(`https://zeex-digital-nftm.vercel.app/api/clients/${clientId}/projects`),
       ]);
       const cData = await cR.json();
       const pData = await pR.json();

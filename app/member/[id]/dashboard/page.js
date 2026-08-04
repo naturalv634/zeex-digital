@@ -50,10 +50,10 @@ export default function MemberDashboard() {
   const fetchData = async () => {
     try {
       const [mR, tR, pR, nR] = await Promise.all([
-        fetch('http://localhost:5000/api/members'),
-        fetch('http://localhost:5000/api/tasks'),
-        fetch(`http://localhost:5000/api/members/${memberId}/projects`),
-        fetch(`http://localhost:5000/api/notifications/${memberId}`),
+        fetch('https://zeex-digital-nftm.vercel.app/api/members'),
+        fetch('https://zeex-digital-nftm.vercel.app/api/tasks'),
+        fetch(`https://zeex-digital-nftm.vercel.app/api/members/${memberId}/projects`),
+        fetch(`https://zeex-digital-nftm.vercel.app/api/notifications/${memberId}`),
       ]);
       const mData = await mR.json();
       const tData = await tR.json();
@@ -74,7 +74,7 @@ export default function MemberDashboard() {
   const updateTaskStatus = async (taskId, newStatus) => {
     setTasks(prev => prev.map(t => t.id === taskId ? { ...t, status: newStatus } : t));
     try {
-      const res = await fetch(`http://localhost:5000/api/tasks/${taskId}`, {
+      const res = await fetch(`https://zeex-digital-nftm.vercel.app/api/tasks/${taskId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status: newStatus }),
@@ -86,7 +86,7 @@ export default function MemberDashboard() {
 
   const markNotifRead = async (notifId) => {
     try {
-      await fetch(`http://localhost:5000/api/notifications/${notifId}/read`, { method: 'PUT' });
+      await fetch(`https://zeex-digital-nftm.vercel.app/api/notifications/${notifId}/read`, { method: 'PUT' });
       setNotifs(prev => prev.map(n => n.id === notifId ? { ...n, read: true } : n));
     } catch {}
   };
@@ -94,7 +94,7 @@ export default function MemberDashboard() {
   const updateProjectProgress = async (projectId, progress) => {
     setMyProjects(prev => prev.map(p => p.id === projectId ? { ...p, progress } : p));
     try {
-      const res = await fetch(`http://localhost:5000/api/projects/${projectId}/progress`, {
+      const res = await fetch(`https://zeex-digital-nftm.vercel.app/api/projects/${projectId}/progress`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ progress }),
@@ -109,12 +109,12 @@ export default function MemberDashboard() {
   // ── Camera / Attendance helpers ──────────────────────
   const checkTodayAttendance = async () => {
     try {
-      const r = await fetch(`http://localhost:5000/api/attendance/member/${memberId}/today`);
+      const r = await fetch(`https://zeex-digital-nftm.vercel.app/api/attendance/member/${memberId}/today`);
       const d = await r.json();
       setTodayAttendance(d);
 
       const month = new Date().toISOString().substring(0, 7);
-      const mR = await fetch(`http://localhost:5000/api/attendance/monthly?month=${month}&member_id=${memberId}`);
+      const mR = await fetch(`https://zeex-digital-nftm.vercel.app/api/attendance/monthly?month=${month}&member_id=${memberId}`);
       const mD = await mR.json();
       if (Array.isArray(mD)) {
          setMonthlyStats(mD.length); // The array length is the present count since it filters by date & member
@@ -176,7 +176,7 @@ export default function MemberDashboard() {
       form.append('status', 'Present');
       form.append('photo', file);
 
-      const r = await fetch('http://localhost:5000/api/attendance', { method: 'POST', body: form });
+      const r = await fetch('https://zeex-digital-nftm.vercel.app/api/attendance', { method: 'POST', body: form });
       const d = await r.json();
       if (d.success) {
         setTodayAttendance(d.attendance);
@@ -349,7 +349,7 @@ export default function MemberDashboard() {
 
             {todayAttendance && todayAttendance.photo_path && (
               <div style={{ display: 'flex', alignItems: 'center', gap: '16px', padding: '14px', backgroundColor: C.card2, borderRadius: '12px', border: `1px solid rgba(0,255,157,0.15)` }}>
-                <img src={`http://localhost:5000${todayAttendance.photo_path}`} alt="Selfie" style={{ width: 56, height: 56, borderRadius: '50%', objectFit: 'cover', border: `2px solid ${C.green}` }} />
+                <img src={`https://zeex-digital-nftm.vercel.app${todayAttendance.photo_path}`} alt="Selfie" style={{ width: 56, height: 56, borderRadius: '50%', objectFit: 'cover', border: `2px solid ${C.green}` }} />
                 <div>
                   <p style={{ color: C.green, fontSize: '13px', fontWeight: '800', margin: '0 0 3px' }}>✓ Checked in successfully</p>
                   <p style={{ color: C.muted, fontSize: '12px', margin: 0 }}>Your selfie was recorded. Admin can see your attendance.</p>

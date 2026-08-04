@@ -82,7 +82,7 @@ export default function AddMember() {
     setLoading(true);
     try {
       const endpoint = form.role === 'client' ? '/api/clients' : '/api/members';
-      const res = await fetch(`http://localhost:5000${endpoint}`, {
+      const res = await fetch(`https://zeex-digital-nftm.vercel.app${endpoint}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

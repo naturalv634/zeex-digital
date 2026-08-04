@@ -41,13 +41,13 @@ export default function Notifications() {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const mR = await fetch('http://localhost:5000/api/members');
+      const mR = await fetch('https://zeex-digital-nftm.vercel.app/api/members');
       const mData = await mR.json();
       setMembers(Array.isArray(mData) ? mData : []);
 
       const allNotifs = [];
       for (const m of (Array.isArray(mData) ? mData : [])) {
-        const res = await fetch(`http://localhost:5000/api/notifications/${m.id}`);
+        const res = await fetch(`https://zeex-digital-nftm.vercel.app/api/notifications/${m.id}`);
         const d   = await res.json();
         if (Array.isArray(d)) {
           allNotifs.push(...d.map(n => ({ ...n, memberName: m.name, memberColor: m.avatar_color })));
@@ -61,7 +61,7 @@ export default function Notifications() {
   const markRead = async (n) => {
     setNotifs(prev => prev.map(x => x.id === n.id ? { ...x, read: true } : x));
     try {
-      await fetch(`http://localhost:5000/api/notifications/${n.id}/read`, { method: 'PUT' });
+      await fetch(`https://zeex-digital-nftm.vercel.app/api/notifications/${n.id}/read`, { method: 'PUT' });
     } catch {}
   };
 
@@ -69,7 +69,7 @@ export default function Notifications() {
     setNotifs(prev => prev.map(x => ({ ...x, read: true })));
     try {
       await Promise.all(notifs.filter(n => !n.read).map(n =>
-        fetch(`http://localhost:5000/api/notifications/${n.id}/read`, { method: 'PUT' })
+        fetch(`https://zeex-digital-nftm.vercel.app/api/notifications/${n.id}/read`, { method: 'PUT' })
       ));
       toast.success('All notifications marked as read');
     } catch { toast.error('Could not update all notifications'); }
@@ -78,7 +78,7 @@ export default function Notifications() {
   const deleteNotif = async (id) => {
     setNotifs(prev => prev.filter(x => x.id !== id));
     try {
-      await fetch(`http://localhost:5000/api/notifications/${id}`, { method: 'DELETE' });
+      await fetch(`https://zeex-digital-nftm.vercel.app/api/notifications/${id}`, { method: 'DELETE' });
     } catch {}
   };
 
@@ -89,7 +89,7 @@ export default function Notifications() {
     }
     setSending(true);
     try {
-      const res = await fetch('http://localhost:5000/api/notifications', {
+      const res = await fetch('https://zeex-digital-nftm.vercel.app/api/notifications', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newNotif),

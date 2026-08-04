@@ -13,7 +13,7 @@ export default function Login() {
     setLoading(true);
     setError('');
     try {
-      const res = await fetch('https://zeex-backend.vercel.app/api/auth/login', {
+      const res = await fetch('https://zeex-digital-nftm.vercel.app/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: form.email, password: form.password })

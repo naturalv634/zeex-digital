@@ -36,8 +36,8 @@ export default function Members() {
   const fetchAll = async () => {
     try {
       const [mR, tR] = await Promise.all([
-        fetch('http://localhost:5000/api/members'),
-        fetch('http://localhost:5000/api/tasks'),
+        fetch('https://zeex-digital-nftm.vercel.app/api/members'),
+        fetch('https://zeex-digital-nftm.vercel.app/api/tasks'),
       ]);
       setMembers(await mR.json());
       setTasks(await tR.json());
@@ -48,7 +48,7 @@ export default function Members() {
   const deleteMember = async (id, name) => {
     if (!confirm(`Delete "${name}"?`)) return;
     try {
-      const res = await fetch(`http://localhost:5000/api/members/${id}`, { method: 'DELETE' });
+      const res = await fetch(`https://zeex-digital-nftm.vercel.app/api/members/${id}`, { method: 'DELETE' });
       const d   = await res.json();
       if (d.success) { toast.success('Member removed'); fetchAll(); }
       else toast.error(d.error || 'Delete failed');

@@ -85,10 +85,10 @@ export default function AdminLayout({ children, title = 'Dashboard' }) {
     const timer = setTimeout(async () => {
       try {
         const [p, m, c, t] = await Promise.all([
-          fetch('http://localhost:5000/api/projects').then(r => r.json()),
-          fetch('http://localhost:5000/api/members').then(r => r.json()),
-          fetch('http://localhost:5000/api/clients').then(r => r.json()),
-          fetch('http://localhost:5000/api/tasks').then(r => r.json()),
+          fetch('https://zeex-digital-nftm.vercel.app/api/projects').then(r => r.json()),
+          fetch('https://zeex-digital-nftm.vercel.app/api/members').then(r => r.json()),
+          fetch('https://zeex-digital-nftm.vercel.app/api/clients').then(r => r.json()),
+          fetch('https://zeex-digital-nftm.vercel.app/api/tasks').then(r => r.json()),
         ]);
         const q = searchQ.trim().toLowerCase();
         setSearchRes({
@@ -104,7 +104,7 @@ export default function AdminLayout({ children, title = 'Dashboard' }) {
 
   const fetchNotifCount = async () => {
     try {
-      const r = await fetch(`http://localhost:5000/api/notifications?user_id=${user?.id || 1}`);
+      const r = await fetch(`https://zeex-digital-nftm.vercel.app/api/notifications?user_id=${user?.id || 1}`);
       const d = await r.json();
       if (Array.isArray(d)) {
         setNotifsList(d);
@@ -115,7 +115,7 @@ export default function AdminLayout({ children, title = 'Dashboard' }) {
 
   const markNotifRead = async (id) => {
     try {
-      await fetch(`http://localhost:5000/api/notifications/${id}/read`, { method: 'PUT' });
+      await fetch(`https://zeex-digital-nftm.vercel.app/api/notifications/${id}/read`, { method: 'PUT' });
       setNotifsList(notifsList.map(n => n.id === id ? { ...n, read: true } : n));
       setNotifCount(prev => Math.max(0, prev - 1));
     } catch {}
