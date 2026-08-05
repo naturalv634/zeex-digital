@@ -10,6 +10,7 @@ import {
 } from 'lucide-react';
 import ToastContainer from './Toast';
 import Logo from './Logo';
+import ThemeToggle from './ThemeToggle';
 
 const NAV_ITEMS = [
   { icon: LayoutDashboard, label: 'Dashboard',     path: '/admin/dashboard' },
@@ -26,14 +27,7 @@ const NAV_ITEMS = [
   { icon: Settings,        label: 'Settings',      path: '/admin/settings'  },
 ];
 
-const C = {
-  bg: '#02050E', bg2: '#050A15', card: 'rgba(8, 14, 26, 0.75)', card2: 'rgba(12, 20, 36, 0.65)', card3: 'rgba(20, 32, 58, 0.55)',
-  border: '#112240', border2: '#1A3366',
-  primary: '#00F3FF', primaryDark: '#0066FF', primaryLight: '#80FAFF',
-  green: '#00FF9D', greenDark: '#00A86B',
-  blue: '#0066FF', orange: '#FFB800', red: '#FF2A5F', purple: '#B02AFF',
-  muted: '#4A628A', muted2: '#7590C2', text: '#FFFFFF', text2: '#C9D6F0',
-};
+import { C } from '../lib/colors';
 
 export default function AdminLayout({ children, title = 'Dashboard' }) {
   const pathname = usePathname();
@@ -366,6 +360,9 @@ export default function AdminLayout({ children, title = 'Dashboard' }) {
                   </div>
                 )}
               </div>
+
+              {/* Theme Toggle */}
+              <ThemeToggle />
 
               {/* Bell */}
               <div ref={notifRef} style={{ position: 'relative' }}>

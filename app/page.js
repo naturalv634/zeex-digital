@@ -6,13 +6,7 @@ import {
   Eye, EyeOff, Zap, ArrowRight, CheckCircle2,
 } from 'lucide-react';
 
-const C = {
-  bg: '#02050E', card: '#080E1E', card2: '#0C1327',
-  border: '#1E2D56', border2: '#2A3F75',
-  primary: '#00F0FF', primaryDark: '#0072FF',
-  green: '#00E599', red: '#FF4757', orange: '#FF9900',
-  muted: '#4A628A', muted2: '#7590C2', text: '#FFFFFF', text2: '#C9D6F0',
-};
+import { C } from './lib/colors';
 
 const FEATURES = [
   { Icon: LayoutDashboard, label: 'Real-time Dashboard',  desc: 'Live project tracking with progress' },

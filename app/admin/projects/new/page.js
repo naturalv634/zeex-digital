@@ -8,14 +8,7 @@ import {
 import AdminLayout from '../../../components/AdminLayout';
 import { toast } from '../../../components/Toast';
 
-const C = {
-  bg2: '#080E1E', card: '#0C1327', card2: '#121C38', card3: '#18264B',
-  border: '#1E2D56',
-  primary: '#00F0FF', primaryDark: '#0072FF',
-  green: '#00E599', greenDark: '#00B377',
-  red: '#FF4757', orange: '#FF9900', blue: '#0072FF', purple: '#9D4EDD',
-  muted: '#64748B', muted2: '#334155', text: '#F1F5F9', text2: '#94A3B8',
-};
+import { C } from '../../../lib/colors';
 
 const SERVICES = [
   'WordPress Development', 'React Development', 'Figma/UI Design',

@@ -1,0 +1,22 @@
+export const C = {
+  bg: 'var(--bg)',
+  bg2: 'var(--bg2)',
+  card: 'var(--card)',
+  card2: 'var(--card2)',
+  card3: 'var(--card3)',
+  border: 'var(--border)',
+  border2: 'var(--border-bright)', // Used generically for active borders
+  primary: 'var(--primary)',
+  primaryDark: 'var(--primary-dark)',
+  primaryLight: 'var(--primary-light)',
+  green: 'var(--neon-green)',
+  greenDark: 'var(--neon-green)',
+  blue: 'var(--neon-blue)',
+  orange: 'var(--neon-amber)',
+  red: 'var(--neon-red)',
+  purple: 'var(--neon-purple)',
+  muted: 'var(--muted)',
+  muted2: 'var(--muted2)',
+  text: 'var(--text)',
+  text2: 'var(--text2)',
+};

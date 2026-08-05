@@ -9,15 +9,9 @@ import {
 } from 'lucide-react';
 import ToastContainer, { toast } from '../../../components/Toast';
 import Logo from '../../../components/Logo';
+import ThemeToggle from '../../../components/ThemeToggle';
 
-const C = {
-  bg: '#050914', bg2: '#090E1A', card: 'rgba(13, 20, 36, 0.7)', card2: 'rgba(19, 31, 56, 0.6)', card3: 'rgba(30, 45, 80, 0.5)',
-  border: '#1E2D56', border2: '#2C4282',
-  primary: '#00F3FF', primaryDark: '#0066FF', primaryLight: '#80FAFF',
-  green: '#00FF9D', greenDark: '#00A86B',
-  blue: '#0066FF', orange: '#FFB800', red: '#FF2A5F', purple: '#B02AFF',
-  muted: '#5C76A6', muted2: '#8AA4D6', text: '#FFFFFF', text2: '#D1DBFF',
-};
+import { C } from '../../../lib/colors';
 
 const PRIORITY_COLORS = { Urgent: C.red, High: C.orange, Medium: C.blue, Low: C.green };
 const STATUSES        = ['Pending', 'In Progress', 'Under Review', 'Completed', 'Blocked'];
@@ -215,6 +209,9 @@ export default function MemberDashboard() {
           </div>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+            {/* Theme Toggle */}
+            <ThemeToggle />
+            
             {/* Notification Bell */}
             <div style={{ position: 'relative' }}>
               <button

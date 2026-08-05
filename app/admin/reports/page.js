@@ -7,14 +7,7 @@ import {
   PieChart, Pie, Legend, LineChart, Line, AreaChart, Area,
 } from 'recharts';
 
-const C = {
-  bg: '#030712', bg2: '#080E1E', card: '#0C1327', card2: '#121C38', card3: '#18264B',
-  border: '#1E2D56', border2: '#2A3F75',
-  primary: '#00F0FF', primaryDark: '#0072FF',
-  green: '#00E599', greenDark: '#00B377',
-  blue: '#0072FF', orange: '#FF9900', red: '#FF4757', purple: '#9D4EDD',
-  muted: '#4A628A', muted2: '#7590C2', text: '#F1F5F9', text2: '#94A3B8',
-};
+import { C } from '../../lib/colors';
 
 const TASK_COLORS = { Pending: C.orange, 'In Progress': C.blue, Completed: C.green, Cancelled: C.muted2, Blocked: C.red };
 const PALETTE = [C.green, C.blue, C.orange, C.purple, C.red, '#00CFE8', '#FF9F43'];

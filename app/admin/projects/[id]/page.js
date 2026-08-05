@@ -8,14 +8,7 @@ import {
 import AdminLayout from '../../../components/AdminLayout'; // using layout component
 import { toast } from '../../../components/Toast';
 
-const C = {
-  bg: '#030712', bg2: '#080E1E', card: '#0C1327', card2: '#121C38', card3: '#18264B',
-  border: '#1E2D56', border2: '#2A3F75',
-  primary: '#00F0FF', primaryDark: '#0072FF', primaryLight: '#38BDF8',
-  green: '#00E599', greenDark: '#00B377',
-  blue: '#0072FF', orange: '#FF9900', red: '#FF4757', purple: '#9D4EDD',
-  muted: '#64748B', muted2: '#334155', text: '#F1F5F9', text2: '#94A3B8',
-};
+import { C } from '../../../lib/colors';
 
 export default function ProjectDetail() {
   const params = useParams();
