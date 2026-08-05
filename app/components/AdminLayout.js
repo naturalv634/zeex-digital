@@ -1,5 +1,6 @@
 'use client';
 import { usePathname, useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { useState, useEffect, useRef } from 'react';
 import {
   LayoutDashboard, FolderKanban, Users, Handshake, CheckSquare,
@@ -170,7 +171,9 @@ export default function AdminLayout({ children, title = 'Dashboard' }) {
           {/* Logo */}
           <div style={{ padding: '22px 20px 20px', borderBottom: `1px solid ${C.border}` }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-              <Logo width={120} />
+              <Link href="/admin/dashboard" style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
+                <Logo width={120} />
+              </Link>
             </div>
           </div>
 
