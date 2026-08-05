@@ -1,6 +1,7 @@
 'use client';
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useParams, useRouter } from 'next/navigation';
+import Link from 'next/link';
 import {
   CheckSquare, FolderKanban, Bell, LogOut, CheckCircle2, Clock,
   AlertCircle, ChevronRight, X, ArrowUpRight, Sparkles, User,
@@ -207,7 +208,9 @@ export default function MemberDashboard() {
           position: 'sticky', top: 0, zIndex: 50, backdropFilter: 'blur(12px)',
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <Logo width={100} />
+            <Link href="/admin/dashboard" style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
+              <Logo width={100} />
+            </Link>
             <span style={{ backgroundColor: 'rgba(0,214,143,0.1)', color: C.green, fontSize: '11px', fontWeight: '700', padding: '2px 8px', borderRadius: '20px', marginLeft: '6px' }}>Member Portal</span>
           </div>
 

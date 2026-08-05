@@ -1,6 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
+import Link from 'next/link';
 import {
   Handshake, CheckCircle2, Clock, CalendarDays, ExternalLink,
   Printer, MessageSquare, Download, Sparkles, Building2
@@ -69,7 +70,9 @@ export default function ClientPortal() {
           position: 'sticky', top: 0, zIndex: 50, backdropFilter: 'blur(12px)',
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <Logo width={100} />
+            <Link href="/admin/dashboard" style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
+              <Logo width={100} />
+            </Link>
             <span style={{ backgroundColor: 'rgba(78,155,255,0.1)', color: C.blue, fontSize: '11px', fontWeight: '700', padding: '2px 8px', borderRadius: '20px', marginLeft: '6px' }}>Client Portal</span>
           </div>
 
