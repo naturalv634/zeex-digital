@@ -46,7 +46,7 @@ export default function Projects() {
 
   const fetchProjects = async () => {
     try {
-      const res = await fetch('https://zeex-digital-nftm.vercel.app/api/projects');
+      const res = await fetch('https://zeex-digital-production.up.railway.app/api/projects');
       setProjects(await res.json());
     } catch { toast.error('Failed to load projects'); }
     setLoading(false);
@@ -55,7 +55,7 @@ export default function Projects() {
   const deleteProject = async (id, name) => {
     if (!confirm(`Delete "${name}"? This cannot be undone.`)) return;
     try {
-      const res  = await fetch(`https://zeex-digital-nftm.vercel.app/api/projects/${id}`, { method: 'DELETE' });
+      const res  = await fetch(`https://zeex-digital-production.up.railway.app/api/projects/${id}`, { method: 'DELETE' });
       const data = await res.json();
       if (data.success) { toast.success('Project deleted'); fetchProjects(); }
       else toast.error(data.error || 'Delete failed');
@@ -66,7 +66,7 @@ export default function Projects() {
     if (!bulkStatus || selected.length === 0) return;
     setUpdating(true);
     try {
-      const res = await fetch('https://zeex-digital-nftm.vercel.app/api/projects/bulk/status', {
+      const res = await fetch('https://zeex-digital-production.up.railway.app/api/projects/bulk/status', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ projectIds: selected, status: bulkStatus })

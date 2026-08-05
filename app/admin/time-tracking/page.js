@@ -66,7 +66,7 @@ export default function TimeTrackingPage() {
     // We only log if it's more than a few seconds (e.g., > 0.01 hours)
     if (parseFloat(hours) > 0) {
       try {
-        await fetch('https://zeex-digital-nftm.vercel.app/api/time-logs', {
+        await fetch('https://zeex-digital-production.up.railway.app/api/time-logs', {
           method: 'POST', headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ 
             project_id: liveForm.project_id, 
@@ -93,10 +93,10 @@ export default function TimeTrackingPage() {
     setLoading(true);
     try {
       const [l, p, m, t] = await Promise.all([
-        fetch('https://zeex-digital-nftm.vercel.app/api/time-logs').then(r => r.json()),
-        fetch('https://zeex-digital-nftm.vercel.app/api/projects').then(r => r.json()),
-        fetch('https://zeex-digital-nftm.vercel.app/api/members').then(r => r.json()),
-        fetch('https://zeex-digital-nftm.vercel.app/api/tasks').then(r => r.json()),
+        fetch('https://zeex-digital-production.up.railway.app/api/time-logs').then(r => r.json()),
+        fetch('https://zeex-digital-production.up.railway.app/api/projects').then(r => r.json()),
+        fetch('https://zeex-digital-production.up.railway.app/api/members').then(r => r.json()),
+        fetch('https://zeex-digital-production.up.railway.app/api/tasks').then(r => r.json()),
       ]);
       setLogs(Array.isArray(l) ? l : []);
       setProjects(Array.isArray(p) ? p : []);
@@ -109,7 +109,7 @@ export default function TimeTrackingPage() {
   const handleLog = async () => {
     if (!form.project_id || !form.member_id || !form.hours) return;
     try {
-      await fetch('https://zeex-digital-nftm.vercel.app/api/time-logs', {
+      await fetch('https://zeex-digital-production.up.railway.app/api/time-logs', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...form, hours: parseFloat(form.hours) }),
       });
@@ -120,7 +120,7 @@ export default function TimeTrackingPage() {
   };
 
   const handleDelete = async (id) => {
-    await fetch(`https://zeex-digital-nftm.vercel.app/api/time-logs/${id}`, { method: 'DELETE' });
+    await fetch(`https://zeex-digital-production.up.railway.app/api/time-logs/${id}`, { method: 'DELETE' });
     fetchAll();
   };
 

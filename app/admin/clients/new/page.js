@@ -61,7 +61,7 @@ export default function AddClient() {
     }
     setLoading(true);
     try {
-      const res = await fetch('https://zeex-digital-nftm.vercel.app/api/clients', {
+      const res = await fetch('https://zeex-digital-production.up.railway.app/api/clients', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

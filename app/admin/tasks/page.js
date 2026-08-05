@@ -59,9 +59,9 @@ export default function Tasks() {
   const fetchAll = async () => {
     try {
       const [tR, mR, pR] = await Promise.all([
-        fetch('https://zeex-digital-nftm.vercel.app/api/tasks'),
-        fetch('https://zeex-digital-nftm.vercel.app/api/members'),
-        fetch('https://zeex-digital-nftm.vercel.app/api/projects'),
+        fetch('https://zeex-digital-production.up.railway.app/api/tasks'),
+        fetch('https://zeex-digital-production.up.railway.app/api/members'),
+        fetch('https://zeex-digital-production.up.railway.app/api/projects'),
       ]);
       setTasks(await tR.json());
       setMembers(await mR.json());
@@ -76,7 +76,7 @@ export default function Tasks() {
       return;
     }
     try {
-      const res = await fetch('https://zeex-digital-nftm.vercel.app/api/tasks', {
+      const res = await fetch('https://zeex-digital-production.up.railway.app/api/tasks', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newTask),
@@ -96,7 +96,7 @@ export default function Tasks() {
   const updateStatus = async (id, status) => {
     setTasks(prev => prev.map(t => t.id === id ? { ...t, status } : t));
     try {
-      const res = await fetch(`https://zeex-digital-nftm.vercel.app/api/tasks/${id}`, {
+      const res = await fetch(`https://zeex-digital-production.up.railway.app/api/tasks/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status }),
@@ -109,7 +109,7 @@ export default function Tasks() {
   const deleteTask = async (id, name) => {
     if (!confirm(`Delete task "${name}"?`)) return;
     try {
-      await fetch(`https://zeex-digital-nftm.vercel.app/api/tasks/${id}`, { method: 'DELETE' });
+      await fetch(`https://zeex-digital-production.up.railway.app/api/tasks/${id}`, { method: 'DELETE' });
       setTasks(prev => prev.filter(t => t.id !== id));
       if (openTask?.id === id) closeModal();
       toast.success('Task deleted');
@@ -139,8 +139,8 @@ export default function Tasks() {
     setOpenTask(task);
     try {
       const [sR, cR] = await Promise.all([
-        fetch(`https://zeex-digital-nftm.vercel.app/api/tasks/${task.id}/subtasks`),
-        fetch(`https://zeex-digital-nftm.vercel.app/api/tasks/${task.id}/comments`),
+        fetch(`https://zeex-digital-production.up.railway.app/api/tasks/${task.id}/subtasks`),
+        fetch(`https://zeex-digital-production.up.railway.app/api/tasks/${task.id}/comments`),
       ]);
       setSubtasks(await sR.json());
       setComments(await cR.json());
@@ -156,7 +156,7 @@ export default function Tasks() {
   const addSubtask = async () => {
     if (!newSubtask.trim()) return;
     try {
-      const res = await fetch(`https://zeex-digital-nftm.vercel.app/api/tasks/${openTask.id}/subtasks`, {
+      const res = await fetch(`https://zeex-digital-production.up.railway.app/api/tasks/${openTask.id}/subtasks`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ text: newSubtask.trim() }),
@@ -173,7 +173,7 @@ export default function Tasks() {
   const toggleSubtask = async (sub) => {
     setSubtasks(subtasks.map(s => s.id === sub.id ? { ...s, done: !s.done } : s));
     try {
-      await fetch(`https://zeex-digital-nftm.vercel.app/api/subtasks/${sub.id}`, {
+      await fetch(`https://zeex-digital-production.up.railway.app/api/subtasks/${sub.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ done: !sub.done }),
@@ -183,7 +183,7 @@ export default function Tasks() {
 
   const deleteSubtask = async (id) => {
     try {
-      await fetch(`https://zeex-digital-nftm.vercel.app/api/subtasks/${id}`, { method: 'DELETE' });
+      await fetch(`https://zeex-digital-production.up.railway.app/api/subtasks/${id}`, { method: 'DELETE' });
       setSubtasks(subtasks.filter(s => s.id !== id));
       toast.success('Subtask deleted');
     } catch { toast.error('Could not delete subtask'); }
@@ -192,7 +192,7 @@ export default function Tasks() {
   const addComment = async () => {
     if (!newComment.trim()) return;
     try {
-      const res = await fetch(`https://zeex-digital-nftm.vercel.app/api/tasks/${openTask.id}/comments`, {
+      const res = await fetch(`https://zeex-digital-production.up.railway.app/api/tasks/${openTask.id}/comments`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ text: newComment.trim(), author: 'Admin' }),

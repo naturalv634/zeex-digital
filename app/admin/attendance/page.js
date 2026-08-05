@@ -22,7 +22,7 @@ const fmt = (ts) => {
 function Avatar({ name, color, size = 44, photo }) {
   if (photo) return (
     <img
-      src={`https://zeex-digital-nftm.vercel.app${photo}`}
+      src={`https://zeex-digital-production.up.railway.app${photo}`}
       alt={name}
       style={{ width: size, height: size, borderRadius: '50%', objectFit: 'cover', border: `2px solid ${color || C.green}`, flexShrink: 0 }}
       onError={e => { e.target.style.display = 'none'; }}
@@ -50,7 +50,7 @@ export default function AttendancePage() {
   const fetchToday = async () => {
     setLoading(true);
     try {
-      const r = await fetch('https://zeex-digital-nftm.vercel.app/api/attendance/today');
+      const r = await fetch('https://zeex-digital-production.up.railway.app/api/attendance/today');
       setData(await r.json());
     } catch {}
     setLoading(false);
@@ -59,7 +59,7 @@ export default function AttendancePage() {
   const fetchHistory = async () => {
     setLoading(true);
     try {
-      const r = await fetch(`https://zeex-digital-nftm.vercel.app/api/attendance?date=${filterDate}`);
+      const r = await fetch(`https://zeex-digital-production.up.railway.app/api/attendance?date=${filterDate}`);
       setHistoryRows(await r.json());
     } catch {}
     setLoading(false);
@@ -68,7 +68,7 @@ export default function AttendancePage() {
   const fetchMonthly = async () => {
     setLoading(true);
     try {
-      const r = await fetch(`https://zeex-digital-nftm.vercel.app/api/attendance/monthly?month=${monthlyMonth}`);
+      const r = await fetch(`https://zeex-digital-production.up.railway.app/api/attendance/monthly?month=${monthlyMonth}`);
       setMonthlyRows(await r.json());
     } catch {}
     setLoading(false);
@@ -264,8 +264,8 @@ export default function AttendancePage() {
                       <td style={{ padding: '14px 18px', color: C.muted2, fontSize: '12.5px' }}>{fmt(r.check_in_time)}</td>
                       <td style={{ padding: '14px 18px' }}>
                         {r.photo_path ? (
-                          <img src={`https://zeex-digital-nftm.vercel.app${r.photo_path}`} alt="selfie" style={{ width: 38, height: 38, borderRadius: '50%', objectFit: 'cover', border: `2px solid ${C.green}`, cursor: 'pointer' }}
-                            onClick={() => window.open(`https://zeex-digital-nftm.vercel.app${r.photo_path}`, '_blank')} />
+                          <img src={`https://zeex-digital-production.up.railway.app${r.photo_path}`} alt="selfie" style={{ width: 38, height: 38, borderRadius: '50%', objectFit: 'cover', border: `2px solid ${C.green}`, cursor: 'pointer' }}
+                            onClick={() => window.open(`https://zeex-digital-production.up.railway.app${r.photo_path}`, '_blank')} />
                         ) : <span style={{ color: C.muted, fontSize: '12px' }}>No photo</span>}
                       </td>
                     </tr>

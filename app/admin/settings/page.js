@@ -61,7 +61,7 @@ export default function Settings() {
 
   const fetchSettings = async () => {
     try {
-      const res  = await fetch('https://zeex-digital-nftm.vercel.app/api/settings');
+      const res  = await fetch('https://zeex-digital-production.up.railway.app/api/settings');
       const data = await res.json();
       setCompany({ name: data.company_name || '', email: data.company_email || '', phone: data.company_phone || '', website: data.company_website || '' });
       setNotifs({ taskAssigned: data.notify_task_assigned, deadlineAlert: data.notify_deadline_alert, projectUpdate: data.notify_project_update, clientView: data.notify_client_view, dailyReport: data.notify_daily_report });
@@ -72,7 +72,7 @@ export default function Settings() {
   const handleSave = async () => {
     setSaving(true);
     try {
-      const res = await fetch('https://zeex-digital-nftm.vercel.app/api/settings', {
+      const res = await fetch('https://zeex-digital-production.up.railway.app/api/settings', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

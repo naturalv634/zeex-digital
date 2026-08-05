@@ -48,8 +48,8 @@ export default function InvoicesPage() {
     setLoading(true);
     try {
       const [inv, proj] = await Promise.all([
-        fetch('https://zeex-digital-nftm.vercel.app/api/invoices').then(r => r.json()),
-        fetch('https://zeex-digital-nftm.vercel.app/api/projects').then(r => r.json()),
+        fetch('https://zeex-digital-production.up.railway.app/api/invoices').then(r => r.json()),
+        fetch('https://zeex-digital-production.up.railway.app/api/projects').then(r => r.json()),
       ]);
       setInvoices(Array.isArray(inv) ? inv : []);
       setProjects(Array.isArray(proj) ? proj : []);
@@ -65,7 +65,7 @@ export default function InvoicesPage() {
 
   const openEdit = async (inv) => {
     try {
-      const full = await fetch(`https://zeex-digital-nftm.vercel.app/api/invoices/${inv.id}`).then(r => r.json());
+      const full = await fetch(`https://zeex-digital-production.up.railway.app/api/invoices/${inv.id}`).then(r => r.json());
       setEditId(inv.id);
       setForm({
         client_name: full.client_name || '',
@@ -95,7 +95,7 @@ export default function InvoicesPage() {
 
   const handleSave = async () => {
     if (!form.client_name) return;
-    const url = editId ? `https://zeex-digital-nftm.vercel.app/api/invoices/${editId}` : 'https://zeex-digital-nftm.vercel.app/api/invoices';
+    const url = editId ? `https://zeex-digital-production.up.railway.app/api/invoices/${editId}` : 'https://zeex-digital-production.up.railway.app/api/invoices';
     const method = editId ? 'PUT' : 'POST';
     try {
       await fetch(url, {
@@ -109,12 +109,12 @@ export default function InvoicesPage() {
 
   const handleDelete = async (id) => {
     if (!confirm('Delete this invoice?')) return;
-    await fetch(`https://zeex-digital-nftm.vercel.app/api/invoices/${id}`, { method: 'DELETE' });
+    await fetch(`https://zeex-digital-production.up.railway.app/api/invoices/${id}`, { method: 'DELETE' });
     fetchAll();
   };
 
   const handleMarkPaid = async (inv) => {
-    await fetch(`https://zeex-digital-nftm.vercel.app/api/invoices/${inv.id}`, {
+    await fetch(`https://zeex-digital-production.up.railway.app/api/invoices/${inv.id}`, {
       method: 'PUT', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ ...inv, status: 'Paid', items: [] }),
     });
