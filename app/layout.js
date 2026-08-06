@@ -6,16 +6,13 @@ const inter = Inter({
   variable: "--font-inter",
 });
 
-<head>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Project Management System" />
-</head>
+export const metadata = {
   title: "ZEEX-Digital",
   description: "Project Management System",
 };
 
 export const viewport = {
-  width: 'device-width',
+  width: "device-width",
   initialScale: 1,
   maximumScale: 1,
 };
@@ -23,7 +20,8 @@ export const viewport = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${inter.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col" style={{ fontFamily: 'var(--font-inter), sans-serif' }}>
+
+      <body className="min-h-full flex flex-col" style={{ fontFamily: "var(--font-inter), sans-serif" }}>
         {children}
       </body>
     </html>
