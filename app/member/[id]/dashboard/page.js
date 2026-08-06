@@ -1,6 +1,7 @@
 'use client';
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useParams, useRouter } from 'next/navigation';
+import Link from 'next/link';
 import {
   CheckSquare, FolderKanban, Bell, LogOut, CheckCircle2, Clock,
   AlertCircle, ChevronRight, X, ArrowUpRight, Sparkles, User,
@@ -26,6 +27,15 @@ export default function MemberDashboard() {
   const [notifs,       setNotifs]       = useState([]);
   const [loading,      setLoading]      = useState(true);
   const [showNotifDrop,setShowNotifDrop]= useState(false);
+  const [isAdmin,      setIsAdmin]      = useState(false);
+
+  // Detect if the current viewer is an admin (visiting member's page)
+  useEffect(() => {
+    try {
+      const saved = JSON.parse(localStorage.getItem('user') || '{}');
+      if (saved?.role === 'admin') setIsAdmin(true);
+    } catch {}
+  }, []);
 
   // Attendance state
   const [todayAttendance, setTodayAttendance] = useState(null);
@@ -201,7 +211,14 @@ export default function MemberDashboard() {
           position: 'sticky', top: 0, zIndex: 50, backdropFilter: 'blur(12px)',
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <Logo width={100} />
+            {/* Logo: clickable only for admin viewers */}
+            {isAdmin ? (
+              <Link href="/admin/dashboard" style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
+                <Logo width={100} />
+              </Link>
+            ) : (
+              <Logo width={100} />
+            )}
             <span style={{ backgroundColor: 'rgba(0,214,143,0.1)', color: C.green, fontSize: '11px', fontWeight: '700', padding: '2px 8px', borderRadius: '20px', marginLeft: '6px' }}>Member Portal</span>
           </div>
 
