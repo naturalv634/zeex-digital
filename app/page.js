@@ -196,9 +196,9 @@ export default function Home() {
         <div className="landing-form-side">
           <div style={{ width: '100%', opacity: mounted ? 1 : 0, transform: mounted ? 'none' : 'translateY(12px)', transition: 'all 0.4s ease' }}>
 
-            {/* Mobile Header Logo */}
-            <div className="mobile-logo-header">
-              <Logo width={170} />
+            {/* Login Card Header Logo (Always Visible) */}
+            <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '28px' }}>
+              <Logo width={210} />
             </div>
 
             {/* Header */}
