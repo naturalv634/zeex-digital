@@ -228,7 +228,7 @@ export default function AttendancePage() {
               <p style={{ color: C.muted, fontSize: '14px' }}>No records for this date.</p>
             </div>
           ) : (
-            <div style={{ backgroundColor: C.card, border: `1px solid ${C.border}`, borderRadius: '16px', overflow: 'hidden' }}>
+            <div className="table-responsive" style={{ backgroundColor: C.card, border: `1px solid ${C.border}`, borderRadius: '16px', overflow: 'hidden' }}>
               <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                 <thead>
                   <tr style={{ borderBottom: `1px solid ${C.border}` }}>

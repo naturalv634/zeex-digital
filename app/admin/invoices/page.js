@@ -180,7 +180,7 @@ export default function InvoicesPage() {
           </div>
         </div>
 
-        <div style={{ overflowX: 'auto' }}>
+        <div className="table-responsive">
           <table style={{ width: '100%', borderCollapse: 'collapse' }}>
             <thead>
               <tr style={{ borderBottom: `1px solid ${C.border}` }}>

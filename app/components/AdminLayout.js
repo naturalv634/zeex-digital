@@ -154,7 +154,6 @@ export default function AdminLayout({ children, title = 'Dashboard' }) {
 
         {/* ── SIDEBAR ───────────────────────────────── */}
         <aside className={`admin-sidebar${sidebarOpen ? ' open' : ''}`} style={{
-          width: '245px',
           backgroundColor: 'rgba(6, 12, 24, 0.85)',
           backdropFilter: 'blur(20px) saturate(180%)',
           borderRight: `1px solid ${C.border}`,
@@ -234,7 +233,7 @@ export default function AdminLayout({ children, title = 'Dashboard' }) {
         </aside>
 
         {/* ── MAIN CONTENT ──────────────────────────── */}
-        <div className="admin-main" style={{ flex: 1, marginLeft: '240px', display: 'flex', flexDirection: 'column', minWidth: 0 }}>
+        <div className="admin-main" style={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0 }}>
 
           {/* Top Bar */}
           <header className="admin-topbar" style={{
@@ -464,7 +463,7 @@ export default function AdminLayout({ children, title = 'Dashboard' }) {
           </header>
 
           {/* Page Content */}
-          <main className="admin-page-content fade-in" style={{ flex: 1, padding: '28px 28px 48px', overflowX: 'hidden' }}>
+          <main className="admin-page-content fade-in" style={{ flex: 1, overflowX: 'hidden' }}>
             {children}
           </main>
         </div>

@@ -607,121 +607,6 @@ aside {
   transform: translateX(0) !important;
 }
 
-/* ── Breakpoint: Tablet & Mobile (max 768px) ── */
-@media (max-width: 768px) {
-
-  /* Admin sidebar becomes a full slide-out drawer */
-  .admin-sidebar {
-    transform: translateX(-100%);
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
-    width: 260px !important;
-    z-index: 200 !important;
-  }
-  .admin-sidebar.open {
-    transform: translateX(0) !important;
-  }
-
-  /* Main content takes full width */
-  .admin-main {
-    margin-left: 0 !important;
-  }
-
-  /* Top bar padding reduced */
-  .admin-topbar {
-    padding: 0 16px !important;
-  }
-
-  /* Page content padding reduced */
-  .admin-page-content {
-    padding: 16px 16px 48px !important;
-  }
-
-  /* Hide search bar on mobile - show just icon */
-  .search-bar-desktop { display: none !important; }
-
-  /* KPI stat grid: 2 columns on mobile */
-  .kpi-grid-4 {
-    grid-template-columns: repeat(2, 1fr) !important;
-  }
-  .kpi-grid-3 {
-    grid-template-columns: repeat(2, 1fr) !important;
-  }
-
-  /* Full-width cards */
-  .card-grid-2, .card-grid-3, .card-grid-4 {
-    grid-template-columns: 1fr !important;
-  }
-
-  /* Two-column layouts become single column */
-  .two-col-layout {
-    flex-direction: column !important;
-    grid-template-columns: 1fr !important;
-  }
-
-  /* Shrink font sizes */
-  h1 { font-size: 20px !important; }
-  h2 { font-size: 17px !important; }
-  h3 { font-size: 15px !important; }
-
-  /* Tables: make scrollable */
-  .table-responsive {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  /* Modals: full screen on mobile */
-  .modal-box {
-    width: 95vw !important;
-    max-width: 95vw !important;
-    border-radius: 18px !important;
-    margin: 10px !important;
-  }
-
-  /* Hide user name in topbar, show only avatar */
-  .topbar-username { display: none !important; }
-  .topbar-chevron  { display: none !important; }
-
-  /* Reduce notification dropdown width */
-  .notif-dropdown { width: 90vw !important; right: -60px !important; }
-
-  /* Member portal hero banner */
-  .member-hero { flex-direction: column !important; gap: 16px !important; }
-  .member-hero-stats { text-align: left !important; }
-
-  /* Landing/Login page */
-  .landing-container { padding: 24px 16px !important; }
-  .login-card { padding: 28px 20px !important; }
-}
-
-/* ── Breakpoint: Small Mobile (max 480px) ── */
-@media (max-width: 480px) {
-  .kpi-grid-4, .kpi-grid-3 {
-    grid-template-columns: 1fr !important;
-  }
-
-  /* Stack header buttons */
-  .page-header {
-    flex-direction: column !important;
-    align-items: flex-start !important;
-  }
-
-  .btn-glow {
-    width: 100% !important;
-    justify-content: center !important;
-  }
-
-  /* Calendar grid */
-  .calendar-grid {
-    font-size: 11px !important;
-  }
-
-  /* Invoice table: stack */
-  table td, table th {
-    padding: 10px 10px !important;
-    font-size: 11px !important;
-  }
-}
-
 /* ── Sidebar transition always smooth ── */
 aside {
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
@@ -763,6 +648,15 @@ aside {
   gap: 24px;
 }
 
+/* ─── Admin Layout Base Definitions ───────────── */
+.admin-sidebar {
+  width: 245px;
+}
+
+.admin-main {
+  margin-left: 245px;
+}
+
 /* ─── KPI Grids ───────────────────────────────── */
 .kpi-grid-4 {
   display: grid;
@@ -787,6 +681,16 @@ aside {
   width: 100%;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
+}
+
+/* ─── Mobile Responsive System ─────────────────── */
+
+/* Sidebar slide-in on mobile */
+.sidebar-mobile-hidden {
+  transform: translateX(-100%) !important;
+}
+.sidebar-mobile-visible {
+  transform: translateX(0) !important;
 }
 
 /* ═══════════════════════════════════════════════
@@ -820,9 +724,18 @@ aside {
   box-shadow: 0 25px 50px rgba(0,0,0,0.5);
 }
 
-/* ─────────────────────────────────────────────
+/* ── Member dashboard hero ── */
+.member-hero-wrap {
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.member-hero-wrap > div:last-child {
+  flex-shrink: 0;
+}
+
+/* ═══════════════════════════════════════════════
    TABLET  (≤ 1024px)
-───────────────────────────────────────────── */
+═══════════════════════════════════════════════ */
 @media (max-width: 1024px) {
   /* Sidebar shrinks on tablet */
   .admin-sidebar {
@@ -843,16 +756,20 @@ aside {
   .admin-page-content {
     padding: 20px 20px 48px !important;
   }
+
+  .two-col-layout {
+    grid-template-columns: 1fr !important;
+  }
 }
 
-/* ─────────────────────────────────────────────
+/* ═══════════════════════════════════════════════
    MOBILE  (≤ 768px)
-───────────────────────────────────────────── */
+═══════════════════════════════════════════════ */
 @media (max-width: 768px) {
 
-  /* ── Admin Sidebar: slide-out drawer ── */
+  /* ── Admin Sidebar: hidden drawer on mobile ── */
   .admin-sidebar {
-    transform: translateX(-100%);
+    transform: translateX(-100%) !important;
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
     width: 260px !important;
     z-index: 200 !important;
@@ -864,23 +781,28 @@ aside {
   /* ── Main content fills full width ── */
   .admin-main {
     margin-left: 0 !important;
+    width: 100% !important;
+    min-width: 0 !important;
   }
 
-  /* ── Top bar ── */
+  /* ── Topbar ── */
   .admin-topbar {
     padding: 0 14px !important;
-    gap: 10px !important;
+    height: 56px !important;
+    gap: 8px !important;
   }
 
   /* ── Page content ── */
   .admin-page-content {
-    padding: 14px 14px 56px !important;
+    padding: 14px 14px 72px !important;
+    overflow-x: hidden !important;
   }
 
-  /* ── Page header stacks ── */
+  /* ── Page header: stack vertically ── */
   .page-header {
     flex-direction: column !important;
     align-items: flex-start !important;
+    gap: 10px !important;
   }
   .page-header button,
   .page-header a {
@@ -891,14 +813,18 @@ aside {
   /* ── Hide desktop search bar ── */
   .search-bar-desktop { display: none !important; }
 
-  /* ── KPI grids ── */
+  /* ── Topbar: hide username / chevron to save space ── */
+  .topbar-username { display: none !important; }
+  .topbar-chevron  { display: none !important; }
+
+  /* ── KPI grids: 2 columns on mobile ── */
   .kpi-grid-4 {
     grid-template-columns: repeat(2, 1fr) !important;
-    gap: 12px !important;
+    gap: 10px !important;
   }
   .kpi-grid-3 {
     grid-template-columns: repeat(2, 1fr) !important;
-    gap: 12px !important;
+    gap: 10px !important;
   }
 
   /* ── Card grids: single column ── */
@@ -912,21 +838,25 @@ aside {
   .two-col-layout {
     display: flex !important;
     flex-direction: column !important;
-    gap: 16px !important;
+    gap: 14px !important;
   }
 
-  /* ── Tables: scroll ── */
+  /* ── Tables: always scrollable ── */
   .table-responsive {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+  .table-responsive table,
+  .table-responsive > div {
+    min-width: 540px !important;
   }
 
-  /* Prevent table overflow cutting ── */
+  /* ── Generic tables ── */
   table {
-    min-width: 600px;
+    min-width: 540px !important;
   }
 
-  /* ── Modals: near-full screen ── */
+  /* ── Modals: bottom sheet style ── */
   .modal-overlay {
     align-items: flex-end !important;
     padding: 0 !important;
@@ -939,50 +869,76 @@ aside {
     max-height: 92vh !important;
   }
 
-  /* ── Typography ── */
+  /* ── Typography scale-down ── */
   h1 { font-size: 20px !important; }
-  h2 { font-size: 17px !important; }
+  h2 { font-size: 18px !important; }
   h3 { font-size: 15px !important; }
 
-  /* ── Topbar utilities ── */
-  .topbar-username { display: none !important; }
-  .topbar-chevron  { display: none !important; }
-  .notif-dropdown  { width: 90vw !important; right: -50px !important; }
-
-  /* ── Member / Client portal header ── */
-  .member-hero { flex-direction: column !important; gap: 16px !important; }
-  .member-hero-stats { text-align: left !important; }
-
-  /* ── Login / Landing ── */
-  .landing-container { padding: 20px 16px !important; }
-  .login-card {
-    padding: 28px 20px !important;
-    border-radius: 12px !important;
+  /* ── Notification dropdown: wide ── */
+  .notif-dropdown { 
+    width: 90vw !important; 
+    right: -40px !important; 
   }
 
-  /* ── Kanban board ── */
-  .kanban-board-scroll {
+  /* ── Member portal top header ── */
+  .member-header { padding: 0 14px !important; }
+  .member-main   { padding: 16px 14px 72px !important; }
+
+  /* ── Member hero: stack ── */
+  .member-hero-wrap {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 14px !important;
+  }
+  .member-hero-wrap > div:last-child {
+    width: 100% !important;
+    text-align: left !important;
+    padding: 14px 18px !important;
+  }
+
+  /* ── Member notif dropdown ── */
+  .member-notif-dropdown {
+    width: 88vw !important;
+    right: -60px !important;
+  }
+
+  /* ── Member stats row ── */
+  .member-stats-row {
     flex-direction: column !important;
   }
 
-  /* ── Buttons full width ── */
+  /* ── Kanban: swipeable horizontal board on mobile ── */
+  .kanban-board-scroll {
+    display: flex !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    gap: 14px !important;
+    padding-bottom: 12px !important;
+  }
+  .kanban-board-scroll > * {
+    min-width: 260px !important;
+    flex-shrink: 0 !important;
+  }
+
+  /* ── btn-glow: full width ── */
   .btn-glow {
     width: 100% !important;
     justify-content: center !important;
   }
 
-  /* ── Charts ── */
+  /* ── Calendar grid ── */
+  .calendar-grid {
+    font-size: 11px !important;
+    gap: 3px !important;
+  }
+
+  /* ── Chart containers ── */
   .recharts-wrapper,
   .recharts-surface {
     max-width: 100% !important;
   }
 
-  /* ── Member dashboard stats row ── */
-  .member-stats-row {
-    flex-direction: column !important;
-  }
-
-  /* ── Client portal ── */
+  /* ── Client portal header actions ── */
   .client-header-actions {
     flex-direction: column !important;
     width: 100% !important;
@@ -992,20 +948,36 @@ aside {
     justify-content: center !important;
   }
 
+  /* ── Filter bar: wrap ── */
+  .filter-bar {
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+  }
+  .filter-bar input,
+  .filter-bar select {
+    width: 100% !important;
+  }
+
+  /* ── Table cells ── */
+  table td, table th {
+    padding: 10px 12px !important;
+    font-size: 12px !important;
+  }
+
   /* ── Sidebar overlay when open ── */
   .sidebar-overlay {
     display: block !important;
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.5);
-    z-index: 199;
-    backdrop-filter: blur(4px);
+    position: fixed !important;
+    inset: 0 !important;
+    background: rgba(0,0,0,0.5) !important;
+    z-index: 199 !important;
+    backdrop-filter: blur(4px) !important;
   }
 }
 
-/* ─────────────────────────────────────────────
+/* ═══════════════════════════════════════════════
    SMALL MOBILE  (≤ 480px)
-───────────────────────────────────────────── */
+═══════════════════════════════════════════════ */
 @media (max-width: 480px) {
 
   /* ── KPI: single column ── */
@@ -1016,12 +988,23 @@ aside {
 
   /* ── Admin topbar ── */
   .admin-topbar {
-    padding: 0 12px !important;
+    padding: 0 10px !important;
+    height: 52px !important;
   }
 
   /* ── Page content ── */
   .admin-page-content {
-    padding: 12px 12px 64px !important;
+    padding: 10px 10px 72px !important;
+  }
+
+  /* ── Member portal ── */
+  .member-header { padding: 0 10px !important; }
+  .member-main   { padding: 10px 10px 72px !important; }
+
+  /* ── Member notif dropdown: almost full screen ── */
+  .member-notif-dropdown {
+    width: 95vw !important;
+    right: -80px !important;
   }
 
   /* ── Table cells ── */
@@ -1051,16 +1034,39 @@ aside {
   .recharts-cartesian-axis-tick text {
     font-size: 10px !important;
   }
+
+  /* ── Card padding ── */
+  .card-elite {
+    padding: 16px !important;
+  }
+
+  /* ── Typography ── */
+  h1 { font-size: 18px !important; }
+  h2 { font-size: 16px !important; }
+  h3 { font-size: 14px !important; }
 }
 
-/* ─────────────────────────────────────────────
-   SIDEBAR OVERLAY (hidden by default)
-───────────────────────────────────────────── */
+/* ═══════════════════════════════════════════════
+   GLOBAL UTILITIES
+═══════════════════════════════════════════════ */
+
+/* Sidebar overlay: hidden by default */
 .sidebar-overlay {
   display: none;
 }
 
-/* ─── Smooth sidebar transition ── */
+/* Smooth sidebar transition */
 aside {
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Prevent horizontal overflow */
+body {
+  overflow-x: hidden;
+}
+
+/* Images: never overflow */
+img {
+  max-width: 100%;
+  height: auto;
 }

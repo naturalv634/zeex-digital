@@ -81,10 +81,10 @@ export default function CalendarView() {
       {loading ? (
         <div className="skeleton" style={{ height: 480, borderRadius: 20 }} />
       ) : (
-        <div style={{ display: 'grid', gridTemplateColumns: selectedDay ? '1fr 340px' : '1fr', gap: '18px', alignItems: 'flex-start' }}>
+        <div className="two-col-layout" style={{ display: 'grid', gridTemplateColumns: selectedDay ? '1.5fr 1fr' : '1fr', gap: '18px', alignItems: 'flex-start' }}>
 
           {/* Calendar Box */}
-          <div style={{ backgroundColor: C.card, border: `1px solid ${C.border}`, borderRadius: '20px', padding: '24px' }}>
+          <div className="table-responsive" style={{ backgroundColor: C.card, border: `1px solid ${C.border}`, borderRadius: '20px', padding: '24px' }}>
 
             {/* Controls */}
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>

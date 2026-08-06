@@ -114,6 +114,7 @@ export default function Notifications() {
         .notif-row:hover { background: rgba(255,255,255,0.03) !important; }
         .notif-row:hover .notif-actions { opacity: 1 !important; }
         .notif-actions { opacity: 0; transition: opacity 0.15s; }
+        @media (max-width: 768px) { .notif-actions { opacity: 1 !important; } }
         .fade-in { animation: fadeIn 0.3s ease; }
         @keyframes fadeIn { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
       `}</style>
@@ -154,7 +155,7 @@ export default function Notifications() {
       </div>
 
       {/* Stats */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: '14px', marginBottom: '22px' }}>
+      <div className="kpi-grid-4" style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: '14px', marginBottom: '22px' }}>
         {[
           { label: 'Total',    value: notifs.length,  color: C.primary, Icon: Bell         },
           { label: 'Unread',   value: unread,          color: C.red,     Icon: ShieldAlert  },

@@ -302,7 +302,7 @@ export default function MemberDashboard() {
         <main className="member-main fade-in">
 
           {/* Hero Banner */}
-          <div style={{
+          <div className="member-hero-wrap" style={{
             borderRadius: '20px', padding: '26px 32px', marginBottom: '24px',
             background: `linear-gradient(135deg, rgba(79,70,229,0.08) 0%, rgba(139,92,246,0.1) 100%)`,
             border: `1px solid ${C.border}`, display: 'flex', justifyContent: 'space-between', alignItems: 'center',

@@ -165,7 +165,7 @@ export default function AdminDashboard() {
             <span style={{ color: C.green, fontWeight: '700' }}>{projects.filter(p => p.status === 'In Progress').length} projects</span> in progress
           </p>
           {/* Quick Actions */}
-          <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+          <div className="welcome-quick-actions" style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
             {[
               { label: 'New Project', icon: FolderPlus, href: '/admin/projects/new', color: C.primary, bg: 'rgba(0,240,255,0.12)', border: 'rgba(0,240,255,0.25)' },
               { label: 'Add Task', icon: CheckSquare, href: '/admin/tasks', color: C.green, bg: 'rgba(0,229,153,0.1)', border: 'rgba(0,229,153,0.2)' },

@@ -97,7 +97,7 @@ export default function Settings() {
 
   if (loading) return (
     <AdminLayout title="Settings">
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+      <div className="two-col-layout" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
         {[0,1,2,3].map(i => <div key={i} className="skeleton" style={{ height: 280, borderRadius: 18 }} />)}
       </div>
     </AdminLayout>
@@ -110,7 +110,7 @@ export default function Settings() {
         <p style={{ color: C.muted, fontSize: '13px', margin: '4px 0 0 0' }}>Manage your agency preferences</p>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+      <div className="two-col-layout" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
 
         {/* Company Info */}
         <SectionCard icon={Building2} iconColor={C.green} title="Company Info">
