@@ -34,85 +34,130 @@ export default function Login() {
     setLoading(false);
   };
 
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') handleLogin();
+  };
+
   return (
-    <div style={{
-      backgroundColor: '#0A0F2C',
-      minHeight: '100vh',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      fontFamily: 'Inter, sans-serif'
-    }}>
-      <div style={{
-        backgroundColor: '#1E2A45',
-        padding: '48px',
-        borderRadius: '16px',
-        width: '100%',
-        maxWidth: '420px',
-        border: '1px solid rgba(0, 212, 255, 0.2)',
-        boxShadow: '0 25px 50px rgba(0,0,0,0.5)'
-      }}>
-        <div style={{ textAlign: 'center', marginBottom: '32px' }}>
-          <Logo width={200} />
-          <p style={{ color: '#FFFFFF', opacity: 0.5, fontSize: '14px', marginTop: '8px' }}>Project Management Portal</p>
+    <>
+      <style>{`
+        .login-outer {
+          background: linear-gradient(135deg, #020B18 0%, #0A0F2C 50%, #030712 100%);
+          min-height: 100vh;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 20px 16px;
+          font-family: 'Inter', sans-serif;
+        }
+        .login-card-inner {
+          background: rgba(14, 22, 48, 0.95);
+          padding: 48px 44px;
+          border-radius: 20px;
+          width: 100%;
+          max-width: 420px;
+          border: 1px solid rgba(0, 212, 255, 0.2);
+          box-shadow: 0 25px 60px rgba(0,0,0,0.6), 0 0 40px rgba(0,212,255,0.05);
+          backdrop-filter: blur(20px);
+        }
+        .login-input {
+          width: 100%;
+          padding: 13px 16px;
+          background: rgba(2, 5, 14, 0.8);
+          border: 1px solid rgba(0, 212, 255, 0.25);
+          border-radius: 10px;
+          color: #ffffff;
+          font-size: 15px;
+          outline: none;
+          box-sizing: border-box;
+          transition: border-color 0.2s;
+          font-family: inherit;
+        }
+        .login-input:focus {
+          border-color: rgba(0, 212, 255, 0.7);
+          box-shadow: 0 0 12px rgba(0,212,255,0.15);
+        }
+        .login-input::placeholder { color: rgba(255,255,255,0.3); }
+        .login-btn {
+          width: 100%;
+          padding: 14px;
+          background: linear-gradient(135deg, #0066FF 0%, #00D4FF 100%);
+          color: #020B18;
+          border: none;
+          border-radius: 10px;
+          font-size: 15px;
+          font-weight: 800;
+          cursor: pointer;
+          transition: all 0.25s;
+          font-family: inherit;
+          letter-spacing: 0.3px;
+        }
+        .login-btn:hover:not(:disabled) {
+          box-shadow: 0 0 24px rgba(0,212,255,0.4);
+          transform: translateY(-1px);
+        }
+        .login-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+        .login-error {
+          background: rgba(255,107,107,0.1);
+          border: 1px solid rgba(255,107,107,0.3);
+          border-radius: 10px;
+          padding: 12px 16px;
+          color: #FF6B6B;
+          font-size: 13px;
+          margin-bottom: 20px;
+        }
+        @media (max-width: 480px) {
+          .login-card-inner {
+            padding: 32px 22px;
+            border-radius: 16px;
+          }
+        }
+      `}</style>
+
+      <div className="login-outer">
+        <div className="login-card-inner">
+          <div style={{ textAlign: 'center', marginBottom: '36px' }}>
+            <Logo width={180} />
+            <p style={{ color: 'rgba(255,255,255,0.45)', fontSize: '13.5px', marginTop: '10px', letterSpacing: '0.2px' }}>
+              Project Management Portal
+            </p>
+          </div>
+
+          {error && <div className="login-error">{error}</div>}
+
+          <div style={{ marginBottom: '20px' }}>
+            <label style={{ color: 'rgba(255,255,255,0.65)', fontSize: '13px', fontWeight: '600', display: 'block', marginBottom: '8px' }}>
+              Email Address
+            </label>
+            <input
+              className="login-input"
+              type="email"
+              value={form.email}
+              onChange={e => setForm({ ...form, email: e.target.value })}
+              onKeyDown={handleKeyDown}
+              placeholder="admin@zeex.com"
+            />
+          </div>
+
+          <div style={{ marginBottom: '28px' }}>
+            <label style={{ color: 'rgba(255,255,255,0.65)', fontSize: '13px', fontWeight: '600', display: 'block', marginBottom: '8px' }}>
+              Password
+            </label>
+            <input
+              className="login-input"
+              type="password"
+              value={form.password}
+              onChange={e => setForm({ ...form, password: e.target.value })}
+              onKeyDown={handleKeyDown}
+              placeholder="••••••••"
+            />
+          </div>
+
+          <button className="login-btn" onClick={handleLogin} disabled={loading}>
+            {loading ? 'Signing In...' : 'Sign In →'}
+          </button>
         </div>
-
-        {error && (
-          <div style={{
-            backgroundColor: 'rgba(255,107,107,0.1)',
-            border: '1px solid rgba(255,107,107,0.3)',
-            borderRadius: '8px', padding: '12px 16px',
-            color: '#FF6B6B', fontSize: '13px', marginBottom: '20px'
-          }}>{error}</div>
-        )}
-
-        <div style={{ marginBottom: '20px' }}>
-          <label style={{ color: '#FFFFFF', opacity: 0.7, fontSize: '14px', display: 'block', marginBottom: '8px' }}>Email Address</label>
-          <input
-            type="email"
-            value={form.email}
-            onChange={e => setForm({ ...form, email: e.target.value })}
-            placeholder="admin@zeex.com"
-            style={{
-              width: '100%', padding: '12px 16px',
-              backgroundColor: '#0A0F2C',
-              border: '1px solid rgba(0, 212, 255, 0.3)',
-              borderRadius: '8px', color: '#FFFFFF',
-              fontSize: '15px', outline: 'none', boxSizing: 'border-box'
-            }}
-          />
-        </div>
-
-        <div style={{ marginBottom: '28px' }}>
-          <label style={{ color: '#FFFFFF', opacity: 0.7, fontSize: '14px', display: 'block', marginBottom: '8px' }}>Password</label>
-          <input
-            type="password"
-            value={form.password}
-            onChange={e => setForm({ ...form, password: e.target.value })}
-            placeholder="••••••••"
-            style={{
-              width: '100%', padding: '12px 16px',
-              backgroundColor: '#0A0F2C',
-              border: '1px solid rgba(0, 212, 255, 0.3)',
-              borderRadius: '8px', color: '#FFFFFF',
-              fontSize: '15px', outline: 'none', boxSizing: 'border-box'
-            }}
-          />
-        </div>
-
-        <button
-          onClick={handleLogin}
-          disabled={loading}
-          style={{
-            width: '100%', padding: '14px',
-            backgroundColor: loading ? 'rgba(0,212,255,0.5)' : '#00D4FF',
-            color: '#0A0F2C', border: 'none',
-            borderRadius: '8px', fontSize: '16px',
-            fontWeight: 'bold', cursor: loading ? 'not-allowed' : 'pointer'
-          }}>
-          {loading ? 'Signing In...' : 'Sign In'}
-        </button>
       </div>
-    </div>
+    </>
   );
 }

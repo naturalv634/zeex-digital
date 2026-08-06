@@ -55,19 +55,35 @@ export default function ClientPortal() {
   return (
     <>
       <ToastContainer />
+      <style>{`
+        .client-header { padding: 0 32px; }
+        .client-main { padding: 32px; max-width: 1000px; margin: 0 auto; }
+        .client-portal-badge { display: inline; }
+        .client-print-text { display: inline; }
+        @media (max-width: 768px) {
+          .client-header { padding: 0 14px !important; }
+          .client-main { padding: 16px 14px 48px !important; }
+          .client-portal-badge { display: none !important; }
+          .client-print-text { display: none !important; }
+        }
+        @media (max-width: 480px) {
+          .client-header { padding: 0 10px !important; }
+          .client-main { padding: 12px 10px 48px !important; }
+        }
+      `}</style>
       <div style={{ backgroundColor: C.bg, minHeight: '100vh', fontFamily: "var(--font, 'Inter', sans-serif)", color: C.text }}>
 
         {/* Top Header */}
-        <header style={{
+        <header className="client-header" style={{
           height: '64px', borderBottom: `1px solid ${C.border}`, backgroundColor: C.card,
-          padding: '0 32px', display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
           position: 'sticky', top: 0, zIndex: 50, backdropFilter: 'blur(12px)',
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
             <Link href="/admin/dashboard" style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
               <Logo width={100} />
             </Link>
-            <span style={{ backgroundColor: 'rgba(78,155,255,0.1)', color: C.blue, fontSize: '11px', fontWeight: '700', padding: '2px 8px', borderRadius: '20px', marginLeft: '6px' }}>Client Portal</span>
+            <span className="client-portal-badge" style={{ backgroundColor: 'rgba(78,155,255,0.1)', color: C.blue, fontSize: '11px', fontWeight: '700', padding: '2px 8px', borderRadius: '20px', marginLeft: '6px' }}>Client Portal</span>
           </div>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
@@ -77,13 +93,13 @@ export default function ClientPortal() {
               borderRadius: '10px', color: C.text, fontSize: '12.5px', fontWeight: '600',
               cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px', fontFamily: 'inherit',
             }}>
-              <Printer size={14} /> Print Summary Report
+              <Printer size={14} /> <span className="client-print-text">Print Summary Report</span>
             </button>
           </div>
         </header>
 
         {/* Content Container */}
-        <main style={{ padding: '32px', maxWidth: '1000px', margin: '0 auto' }} className="fade-in">
+        <main className="client-main fade-in">
 
           {/* Client Hero Banner */}
           <div className="two-col-layout" style={{

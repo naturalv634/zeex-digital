@@ -202,12 +202,34 @@ export default function MemberDashboard() {
   return (
     <>
       <ToastContainer />
+      <style>{`
+        .member-header { padding: 0 32px; }
+        .member-main { padding: 32px; max-width: 1280px; margin: 0 auto; }
+        .member-hero-wrap { display: flex; justify-content: space-between; align-items: center; }
+        .member-name-text { display: block; }
+        .member-logout-text { display: inline; }
+        .member-notif-dropdown { width: 320px; right: 0; }
+        @media (max-width: 768px) {
+          .member-header { padding: 0 14px !important; }
+          .member-main { padding: 16px 14px 56px !important; }
+          .member-hero-wrap { flex-direction: column !important; align-items: flex-start !important; gap: 14px !important; }
+          .member-name-text { display: none !important; }
+          .member-logout-text { display: none !important; }
+          .member-notif-dropdown { width: 90vw !important; right: -80px !important; }
+          .member-stats-grid { grid-template-columns: repeat(2,1fr) !important; gap: 12px !important; }
+        }
+        @media (max-width: 480px) {
+          .member-header { padding: 0 10px !important; }
+          .member-main { padding: 12px 10px 56px !important; }
+          .member-stats-grid { grid-template-columns: 1fr !important; }
+        }
+      `}</style>
       <div style={{ backgroundColor: C.bg, minHeight: '100vh', backgroundImage: `radial-gradient(circle at top right, rgba(0, 243, 255, 0.05), transparent 40%), linear-gradient(rgba(255,255,255,0.01) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.01) 1px, transparent 1px)`, backgroundSize: '100% 100%, 30px 30px, 30px 30px', fontFamily: "var(--font, 'Inter', sans-serif)", color: C.text }}>
 
         {/* Top Navigation */}
-        <header style={{
+        <header className="member-header" style={{
           height: '64px', borderBottom: `1px solid ${C.border}`, backgroundColor: C.card,
-          padding: '0 32px', display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
           position: 'sticky', top: 0, zIndex: 50, backdropFilter: 'blur(12px)',
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
@@ -219,7 +241,7 @@ export default function MemberDashboard() {
             ) : (
               <Logo width={100} />
             )}
-            <span style={{ backgroundColor: 'rgba(0,214,143,0.1)', color: C.green, fontSize: '11px', fontWeight: '700', padding: '2px 8px', borderRadius: '20px', marginLeft: '6px' }}>Member Portal</span>
+            <span className="member-name-text" style={{ backgroundColor: 'rgba(0,214,143,0.1)', color: C.green, fontSize: '11px', fontWeight: '700', padding: '2px 8px', borderRadius: '20px', marginLeft: '6px' }}>Member Portal</span>
           </div>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
@@ -239,7 +261,7 @@ export default function MemberDashboard() {
               </button>
 
               {showNotifDrop && (
-                <div style={{ position: 'absolute', top: '48px', right: 0, width: '320px', backgroundColor: C.card, border: `1px solid ${C.border}`, borderRadius: '14px', boxShadow: '0 12px 36px rgba(0,0,0,0.5)', zIndex: 100, padding: '14px' }}>
+                <div className="member-notif-dropdown" style={{ position: 'absolute', top: '48px', backgroundColor: C.card, border: `1px solid ${C.border}`, borderRadius: '14px', boxShadow: '0 12px 36px rgba(0,0,0,0.5)', zIndex: 100, padding: '14px' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
                     <p style={{ color: C.text, fontSize: '13px', fontWeight: '800', margin: 0 }}>Notifications</p>
                     <span style={{ color: C.muted, fontSize: '11px' }}>{unreadCount} unread</span>
@@ -262,8 +284,8 @@ export default function MemberDashboard() {
                 {(member?.name || 'M')[0].toUpperCase()}
               </div>
               <div>
-                <p style={{ color: C.text, fontSize: '13px', fontWeight: '700', margin: 0 }}>{member?.name || 'Member'}</p>
-                <p style={{ color: C.muted, fontSize: '10.5px', margin: 0 }}>{member?.department || 'Team Member'}</p>
+                <p className="member-name-text" style={{ color: C.text, fontSize: '13px', fontWeight: '700', margin: 0 }}>{member?.name || 'Member'}</p>
+                <p className="member-name-text" style={{ color: C.muted, fontSize: '10.5px', margin: 0 }}>{member?.department || 'Team Member'}</p>
               </div>
             </div>
 
@@ -277,7 +299,7 @@ export default function MemberDashboard() {
         </header>
 
         {/* Main Content Container */}
-        <main style={{ padding: '32px', maxWidth: '1280px', margin: '0 auto' }} className="fade-in">
+        <main className="member-main fade-in">
 
           {/* Hero Banner */}
           <div style={{

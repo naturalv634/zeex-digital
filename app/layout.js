@@ -6,9 +6,18 @@ const inter = Inter({
   variable: "--font-inter",
 });
 
-export const metadata = {
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Project Management System" />
+</head>
   title: "ZEEX-Digital",
   description: "Project Management System",
+};
+
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
 };
 
 export default function RootLayout({ children }) {
