@@ -7,6 +7,7 @@ import {
 } from 'lucide-react';
 
 import { C } from './lib/colors';
+import Logo from './components/Logo';
 
 const FEATURES = [
   { Icon: LayoutDashboard, label: 'Real-time Dashboard',  desc: 'Live project tracking with progress' },
@@ -137,11 +138,9 @@ export default function Home() {
 
           {/* Logo */}
           <div style={{ marginBottom: '48px', position: 'relative', zIndex: 1 }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '24px' }}>
-              <img src="/logo.png" alt="ZEEX Digital" style={{ height: '56px', objectFit: 'contain' }} />
-              <div>
-                <p style={{ color: C.muted, fontSize: '13px', margin: 0, marginTop: '4px' }}>Project Management Portal</p>
-              </div>
+            <div style={{ marginBottom: '24px' }}>
+              <Logo width={200} />
+              <p style={{ color: C.muted, fontSize: '13px', margin: 0, marginTop: '8px' }}>Project Management Portal</p>
             </div>
             {/* Tagline */}
             <h2 style={{ color: C.text, fontSize: '36px', fontWeight: '900', margin: '0 0 14px', lineHeight: 1.15, letterSpacing: '-0.8px' }}>
@@ -199,7 +198,7 @@ export default function Home() {
 
             {/* Mobile Header Logo */}
             <div className="mobile-logo-header">
-              <img src="/logo.png" alt="ZEEX Digital" style={{ height: '44px', objectFit: 'contain' }} />
+              <Logo width={170} />
             </div>
 
             {/* Header */}
