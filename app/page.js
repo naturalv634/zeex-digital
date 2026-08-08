@@ -18,6 +18,96 @@ const FEATURES = [
 
 const SERVICES = ['WordPress', 'React', 'Figma/UI', 'Mobile Apps', 'SEO', 'Video Editing', 'QA Testing', 'Content Writing'];
 
+/* ─────────────────────────────────────────────────────
+   Cartoon Robot Character (SVG)
+   A cute robot mascot that "pulls" the login form
+───────────────────────────────────────────────────── */
+function CartoonRobot({ phase }) {
+  // phase: 'idle' | 'walking' | 'pulling' | 'done'
+  const armAngle = phase === 'pulling' ? -25 : 0;
+  const bodyBounce = (phase === 'walking') ? 'robot-walk' : (phase === 'pulling' ? 'robot-pull' : '');
+
+  return (
+    <svg
+      className={`cartoon-robot ${bodyBounce}`}
+      viewBox="0 0 160 220"
+      xmlns="http://www.w3.org/2000/svg"
+      style={{ width: '120px', height: 'auto', overflow: 'visible' }}
+    >
+      <defs>
+        <linearGradient id="robotBodyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stopColor="#A78BFA" />
+          <stop offset="100%" stopColor="#7C3AED" />
+        </linearGradient>
+        <linearGradient id="robotFaceGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stopColor="#1E1B4B" />
+          <stop offset="100%" stopColor="#0F0A2A" />
+        </linearGradient>
+        <filter id="robotGlow">
+          <feDropShadow dx="0" dy="3" stdDeviation="5" floodColor="#7C3AED" floodOpacity="0.4" />
+        </filter>
+      </defs>
+
+      {/* Antenna */}
+      <line x1="80" y1="8" x2="80" y2="28" stroke="#A78BFA" strokeWidth="3" strokeLinecap="round" />
+      <circle cx="80" cy="6" r="5" fill="#C084FC">
+        <animate attributeName="opacity" values="1;0.3;1" dur="1.5s" repeatCount="indefinite" />
+      </circle>
+
+      {/* Head */}
+      <rect x="40" y="28" width="80" height="60" rx="18" fill="url(#robotBodyGrad)" filter="url(#robotGlow)" />
+      {/* Face screen */}
+      <rect x="50" y="38" width="60" height="40" rx="10" fill="url(#robotFaceGrad)" />
+      {/* Eyes */}
+      <circle cx="68" cy="56" r="7" fill="#34D399">
+        <animate attributeName="r" values="7;5;7" dur="3s" repeatCount="indefinite" />
+      </circle>
+      <circle cx="92" cy="56" r="7" fill="#34D399">
+        <animate attributeName="r" values="7;5;7" dur="3s" repeatCount="indefinite" />
+      </circle>
+      {/* Eye shine */}
+      <circle cx="65" cy="53" r="2.5" fill="white" opacity="0.8" />
+      <circle cx="89" cy="53" r="2.5" fill="white" opacity="0.8" />
+      {/* Mouth */}
+      <rect x="65" y="66" width="30" height="4" rx="2" fill="#34D399" opacity="0.6" />
+
+      {/* Neck */}
+      <rect x="72" y="88" width="16" height="10" rx="4" fill="#6D28D9" />
+
+      {/* Body */}
+      <rect x="35" y="98" width="90" height="60" rx="16" fill="url(#robotBodyGrad)" filter="url(#robotGlow)" />
+      {/* Chest circle */}
+      <circle cx="80" cy="125" r="12" fill="#1E1B4B" stroke="#A78BFA" strokeWidth="2">
+        <animate attributeName="stroke-opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite" />
+      </circle>
+      {/* Power icon in chest */}
+      <text x="80" y="130" textAnchor="middle" fontSize="13" fill="#C084FC" fontWeight="bold">⚡</text>
+
+      {/* Left Arm (pulling arm - points toward form) */}
+      <g transform={`rotate(${armAngle}, 35, 108)`} style={{ transition: 'transform 0.5s ease' }}>
+        <rect x="8" y="102" width="27" height="14" rx="7" fill="#6D28D9" />
+        {/* Hand */}
+        <circle cx="10" cy="109" r="8" fill="#A78BFA" />
+        {/* Fingers */}
+        <rect x="0" y="104" width="8" height="4" rx="2" fill="#C084FC" />
+        <rect x="0" y="110" width="8" height="4" rx="2" fill="#C084FC" />
+      </g>
+
+      {/* Right Arm */}
+      <rect x="125" y="102" width="27" height="14" rx="7" fill="#6D28D9" />
+      <circle cx="150" cy="109" r="8" fill="#A78BFA" />
+
+      {/* Left Leg */}
+      <rect x="48" y="158" width="18" height="30" rx="8" fill="#6D28D9" />
+      <rect x="44" y="184" width="26" height="14" rx="6" fill="#A78BFA" />
+
+      {/* Right Leg */}
+      <rect x="94" y="158" width="18" height="30" rx="8" fill="#6D28D9" />
+      <rect x="90" y="184" width="26" height="14" rx="6" fill="#A78BFA" />
+    </svg>
+  );
+}
+
 export default function Home() {
   const router = useRouter();
   const [form, setForm] = useState({ email: '', password: '' });
@@ -26,7 +116,18 @@ export default function Home() {
   const [showPass, setShowPass] = useState(false);
   const [mounted, setMounted] = useState(false);
 
-  useEffect(() => { setMounted(true); }, []);
+  // Animation phases
+  const [animPhase, setAnimPhase] = useState('waiting'); // waiting -> robotEnter -> pulling -> formVisible -> done
+
+  useEffect(() => {
+    setMounted(true);
+    // Start animation sequence
+    const t1 = setTimeout(() => setAnimPhase('robotEnter'), 400);
+    const t2 = setTimeout(() => setAnimPhase('pulling'), 1600);
+    const t3 = setTimeout(() => setAnimPhase('formVisible'), 2400);
+    const t4 = setTimeout(() => setAnimPhase('done'), 3200);
+    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); clearTimeout(t4); };
+  }, []);
 
   const handleAuth = async () => {
     if (!form.email || !form.password) { setError('Email aur password required hain'); return; }
@@ -55,6 +156,12 @@ export default function Home() {
   };
 
   const handleKey = (e) => { if (e.key === 'Enter') handleAuth(); };
+
+  // Determine robot visual phase
+  const robotPhase =
+    animPhase === 'pulling' ? 'pulling' :
+    animPhase === 'robotEnter' ? 'walking' :
+    'idle';
 
   return (
     <>
@@ -88,10 +195,149 @@ export default function Home() {
           background-color: ${C.card};
           position: relative;
           z-index: 1;
+          overflow: hidden;
         }
-        .mobile-logo-header {
-          display: none;
+
+        /* ── Robot + Form Animation Container ── */
+        .form-animation-wrapper {
+          position: relative;
+          width: 100%;
         }
+
+        /* ── Robot Animation ── */
+        .robot-container {
+          position: absolute;
+          z-index: 10;
+          transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+          pointer-events: none;
+        }
+
+        /* Desktop: robot enters from right side */
+        .robot-waiting {
+          right: -180px;
+          top: 50%;
+          transform: translateY(-50%);
+          opacity: 0;
+        }
+        .robot-enter {
+          right: -60px;
+          top: 50%;
+          transform: translateY(-50%);
+          opacity: 1;
+        }
+        .robot-pulling {
+          right: -40px;
+          top: 50%;
+          transform: translateY(-50%) scaleX(-1);
+          opacity: 1;
+        }
+        .robot-done {
+          right: -50px;
+          top: -10px;
+          transform: scale(0.55);
+          opacity: 1;
+        }
+
+        /* ── Form Slide Animation ── */
+        .login-form-content {
+          transition: all 0.9s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .form-hidden {
+          opacity: 0;
+          transform: translateX(120%);
+        }
+        .form-pulling {
+          opacity: 0.4;
+          transform: translateX(40%);
+        }
+        .form-visible {
+          opacity: 1;
+          transform: translateX(0);
+        }
+
+        /* ── Robot Walking Animation ── */
+        @keyframes robotWalkBounce {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-8px); }
+        }
+        .robot-walk .cartoon-robot {
+          animation: robotWalkBounce 0.4s ease-in-out infinite;
+        }
+
+        /* ── Robot Pulling Animation ── */
+        @keyframes robotPullStrain {
+          0%, 100% { transform: translateX(0) rotate(0deg); }
+          25% { transform: translateX(-6px) rotate(-3deg); }
+          75% { transform: translateX(4px) rotate(2deg); }
+        }
+        .robot-pull .cartoon-robot {
+          animation: robotPullStrain 0.3s ease-in-out infinite;
+        }
+
+        /* ── "Let me help!" speech bubble ── */
+        .robot-speech {
+          position: absolute;
+          background: rgba(124, 58, 237, 0.9);
+          color: white;
+          padding: 8px 14px;
+          border-radius: 12px;
+          font-size: 11px;
+          font-weight: 700;
+          white-space: nowrap;
+          opacity: 0;
+          transition: opacity 0.4s;
+          pointer-events: none;
+          top: -16px;
+          right: 40px;
+        }
+        .robot-speech::after {
+          content: '';
+          position: absolute;
+          bottom: -6px;
+          right: 20px;
+          width: 0;
+          height: 0;
+          border-left: 6px solid transparent;
+          border-right: 6px solid transparent;
+          border-top: 8px solid rgba(124, 58, 237, 0.9);
+        }
+        .robot-speech.show {
+          opacity: 1;
+        }
+
+        /* ── Rope/cord visual connecting robot to form ── */
+        .pull-rope {
+          position: absolute;
+          top: 50%;
+          right: 0;
+          width: 0;
+          height: 3px;
+          background: linear-gradient(90deg, #7C3AED, #C084FC);
+          border-radius: 2px;
+          transition: width 0.5s ease;
+          z-index: 5;
+          opacity: 0;
+        }
+        .pull-rope.active {
+          width: 80px;
+          opacity: 1;
+        }
+
+        /* ── Sparkle particles when form appears ── */
+        @keyframes sparkle {
+          0% { opacity: 0; transform: scale(0) rotate(0deg); }
+          50% { opacity: 1; transform: scale(1) rotate(180deg); }
+          100% { opacity: 0; transform: scale(0) rotate(360deg); }
+        }
+        .sparkle-particle {
+          position: absolute;
+          width: 8px;
+          height: 8px;
+          border-radius: 50%;
+          pointer-events: none;
+          animation: sparkle 0.8s ease forwards;
+        }
+
         @media (max-width: 768px) {
           .login-landing-container {
             flex-direction: column !important;
@@ -109,11 +355,41 @@ export default function Home() {
             border-radius: 20px !important;
             border: 1px solid ${C.border} !important;
             box-shadow: 0 20px 50px rgba(0,0,0,0.6) !important;
+            overflow: visible !important;
           }
-          .mobile-logo-header {
-            display: flex !important;
-            justify-content: center;
-            margin-bottom: 24px;
+          /* Mobile: robot comes from top */
+          .robot-waiting {
+            right: auto;
+            left: 50%;
+            top: -180px;
+            transform: translateX(-50%);
+          }
+          .robot-enter {
+            right: auto;
+            left: 50%;
+            top: -120px;
+            transform: translateX(-50%);
+          }
+          .robot-pulling {
+            right: auto;
+            left: 50%;
+            top: -110px;
+            transform: translateX(-50%);
+          }
+          .robot-done {
+            right: auto;
+            left: 50%;
+            top: -70px;
+            transform: translateX(-50%) scale(0.5);
+          }
+          .form-hidden {
+            transform: translateY(80px);
+          }
+          .form-pulling {
+            transform: translateY(30px);
+          }
+          .pull-rope {
+            display: none;
           }
         }
         @media (max-width: 480px) {
@@ -192,79 +468,95 @@ export default function Home() {
           </div>
         </div>
 
-        {/* ── RIGHT: Auth Form ──────────────────────── */}
+        {/* ── RIGHT: Auth Form with Robot Animation ──────────────────────── */}
         <div className="landing-form-side">
-          <div style={{ width: '100%', opacity: mounted ? 1 : 0, transform: mounted ? 'none' : 'translateY(12px)', transition: 'all 0.4s ease' }}>
+          <div className="form-animation-wrapper">
 
-            {/* Login Card Header Logo (Always Visible) */}
-            <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '28px' }}>
-              <Logo width={210} />
+            {/* ── Robot Character ── */}
+            <div className={`robot-container robot-${
+              animPhase === 'waiting' ? 'waiting' :
+              animPhase === 'robotEnter' ? 'enter' :
+              animPhase === 'pulling' ? 'pulling' :
+              'done'
+            }`}>
+              {/* Speech bubble */}
+              <div className={`robot-speech ${animPhase === 'robotEnter' || animPhase === 'pulling' ? 'show' : ''}`}>
+                {animPhase === 'pulling' ? '🔥 Almost there!' : '👋 Let me help!'}
+              </div>
+              <CartoonRobot phase={robotPhase} />
             </div>
 
-            {/* Header */}
-            <div style={{ marginBottom: '32px' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '10px' }}>
-                <Zap size={18} color={C.primary} />
-                <span style={{ color: C.primary, fontSize: '12px', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.8px' }}>
-                  Secure Login
-                </span>
-              </div>
-              <h2 style={{ color: C.text, fontSize: '26px', fontWeight: '900', margin: '0 0 6px', letterSpacing: '-0.4px' }}>
-                Welcome Back
-              </h2>
-              <p style={{ color: C.muted2, fontSize: '13.5px', margin: 0 }}>
-                Sign in to your ZEEX-Digital account
-              </p>
-            </div>
+            {/* ── Pull Rope ── */}
+            <div className={`pull-rope ${animPhase === 'pulling' ? 'active' : ''}`} />
 
-            {/* Error */}
-            {error && (
-              <div style={{
-                backgroundColor: 'rgba(255,71,87,0.1)', border: `1px solid rgba(255,71,87,0.3)`,
-                borderRadius: '10px', padding: '12px 16px', color: C.red,
-                fontSize: '13px', marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '8px',
-              }}>
-                ⚠ {error}
-              </div>
+            {/* ── Sparkle particles when form appears ── */}
+            {animPhase === 'formVisible' && (
+              <>
+                {[
+                  { top: '10%', left: '5%', bg: '#C084FC', delay: '0s' },
+                  { top: '20%', right: '10%', bg: '#34D399', delay: '0.1s' },
+                  { top: '80%', left: '15%', bg: '#7C3AED', delay: '0.2s' },
+                  { top: '60%', right: '8%', bg: '#A78BFA', delay: '0.15s' },
+                  { top: '40%', left: '80%', bg: '#34D399', delay: '0.25s' },
+                  { top: '5%', left: '50%', bg: '#C084FC', delay: '0.05s' },
+                ].map((s, i) => (
+                  <div key={i} className="sparkle-particle" style={{ ...s, animationDelay: s.delay }} />
+                ))}
+              </>
             )}
 
-            {/* Email Field */}
-            <div style={{ marginBottom: '16px' }}>
-              <label style={{ color: C.muted2, fontSize: '12.5px', display: 'block', marginBottom: '8px', fontWeight: '600' }}>
-                Email Address
-              </label>
-              <input
-                type="email"
-                value={form.email}
-                onChange={e => setForm({ ...form, email: e.target.value })}
-                onKeyDown={handleKey}
-                placeholder="you@zeex-digital.com"
-                style={{
-                  width: '100%', padding: '12px 16px',
-                  backgroundColor: C.bg, border: `1px solid ${C.border}`,
-                  borderRadius: '10px', color: C.text, fontSize: '14px',
-                  outline: 'none', fontFamily: 'inherit', boxSizing: 'border-box',
-                  transition: 'all 0.2s',
-                }}
-                onFocus={e => { e.target.style.borderColor = C.primary; e.target.style.boxShadow = `0 0 14px rgba(0,240,255,0.15)`; }}
-                onBlur={e => { e.target.style.borderColor = C.border; e.target.style.boxShadow = 'none'; }}
-              />
-            </div>
+            {/* ── Login Form ── */}
+            <div className={`login-form-content ${
+              animPhase === 'waiting' || animPhase === 'robotEnter' ? 'form-hidden' :
+              animPhase === 'pulling' ? 'form-pulling' :
+              'form-visible'
+            }`}>
 
-            {/* Password Field */}
-            <div style={{ marginBottom: '26px' }}>
-              <label style={{ color: C.muted2, fontSize: '12.5px', display: 'block', marginBottom: '8px', fontWeight: '600' }}>
-                Password
-              </label>
-              <div style={{ position: 'relative' }}>
+              {/* Login Card Header Logo (Always Visible) */}
+              <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '28px' }}>
+                <Logo width={210} />
+              </div>
+
+              {/* Header */}
+              <div style={{ marginBottom: '32px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '10px' }}>
+                  <Zap size={18} color={C.primary} />
+                  <span style={{ color: C.primary, fontSize: '12px', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.8px' }}>
+                    Secure Login
+                  </span>
+                </div>
+                <h2 style={{ color: C.text, fontSize: '26px', fontWeight: '900', margin: '0 0 6px', letterSpacing: '-0.4px' }}>
+                  Welcome Back
+                </h2>
+                <p style={{ color: C.muted2, fontSize: '13.5px', margin: 0 }}>
+                  Sign in to your ZEEX-Digital account
+                </p>
+              </div>
+
+              {/* Error */}
+              {error && (
+                <div style={{
+                  backgroundColor: 'rgba(255,71,87,0.1)', border: `1px solid rgba(255,71,87,0.3)`,
+                  borderRadius: '10px', padding: '12px 16px', color: C.red,
+                  fontSize: '13px', marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '8px',
+                }}>
+                  ⚠ {error}
+                </div>
+              )}
+
+              {/* Email Field */}
+              <div style={{ marginBottom: '16px' }}>
+                <label style={{ color: C.muted2, fontSize: '12.5px', display: 'block', marginBottom: '8px', fontWeight: '600' }}>
+                  Email Address
+                </label>
                 <input
-                  type={showPass ? 'text' : 'password'}
-                  value={form.password}
-                  onChange={e => setForm({ ...form, password: e.target.value })}
+                  type="email"
+                  value={form.email}
+                  onChange={e => setForm({ ...form, email: e.target.value })}
                   onKeyDown={handleKey}
-                  placeholder="••••••••"
+                  placeholder="you@zeex-digital.com"
                   style={{
-                    width: '100%', padding: '12px 42px 12px 16px',
+                    width: '100%', padding: '12px 16px',
                     backgroundColor: C.bg, border: `1px solid ${C.border}`,
                     borderRadius: '10px', color: C.text, fontSize: '14px',
                     outline: 'none', fontFamily: 'inherit', boxSizing: 'border-box',
@@ -273,62 +565,87 @@ export default function Home() {
                   onFocus={e => { e.target.style.borderColor = C.primary; e.target.style.boxShadow = `0 0 14px rgba(0,240,255,0.15)`; }}
                   onBlur={e => { e.target.style.borderColor = C.border; e.target.style.boxShadow = 'none'; }}
                 />
-                <button
-                  type="button"
-                  onClick={() => setShowPass(v => !v)}
-                  style={{ position: 'absolute', right: '12px', top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', color: C.muted, padding: 0 }}
-                >
-                  {showPass ? <EyeOff size={16} /> : <Eye size={16} />}
-                </button>
               </div>
-            </div>
 
-            {/* Submit */}
-            <button
-              onClick={handleAuth}
-              disabled={loading}
-              style={{
-                width: '100%', padding: '13px',
-                background: loading ? `rgba(0,240,255,0.3)` : `linear-gradient(135deg, ${C.primaryDark}, ${C.primary})`,
-                color: '#030712', border: 'none', borderRadius: '10px',
-                fontSize: '15px', fontWeight: '800', cursor: loading ? 'not-allowed' : 'pointer',
-                marginBottom: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
-                boxShadow: loading ? 'none' : `0 0 20px rgba(0,240,255,0.3)`,
-                transition: 'all 0.2s', fontFamily: 'inherit',
-              }}
-              onMouseEnter={e => { if (!loading) { e.currentTarget.style.boxShadow = `0 0 30px rgba(0,240,255,0.5)`; e.currentTarget.style.transform = 'translateY(-1px)'; } }}
-              onMouseLeave={e => { e.currentTarget.style.boxShadow = `0 0 20px rgba(0,240,255,0.3)`; e.currentTarget.style.transform = 'none'; }}
-            >
-              {loading ? (
-                <>
-                  <span style={{ width: 14, height: 14, border: `2px solid #030712`, borderTopColor: 'transparent', borderRadius: '50%', display: 'inline-block', animation: 'spin 0.6s linear infinite' }} />
-                  Signing in...
-                </>
-              ) : (
-                <>Sign In <ArrowRight size={16} /></>
-              )}
-            </button>
+              {/* Password Field */}
+              <div style={{ marginBottom: '26px' }}>
+                <label style={{ color: C.muted2, fontSize: '12.5px', display: 'block', marginBottom: '8px', fontWeight: '600' }}>
+                  Password
+                </label>
+                <div style={{ position: 'relative' }}>
+                  <input
+                    type={showPass ? 'text' : 'password'}
+                    value={form.password}
+                    onChange={e => setForm({ ...form, password: e.target.value })}
+                    onKeyDown={handleKey}
+                    placeholder="••••••••"
+                    style={{
+                      width: '100%', padding: '12px 42px 12px 16px',
+                      backgroundColor: C.bg, border: `1px solid ${C.border}`,
+                      borderRadius: '10px', color: C.text, fontSize: '14px',
+                      outline: 'none', fontFamily: 'inherit', boxSizing: 'border-box',
+                      transition: 'all 0.2s',
+                    }}
+                    onFocus={e => { e.target.style.borderColor = C.primary; e.target.style.boxShadow = `0 0 14px rgba(0,240,255,0.15)`; }}
+                    onBlur={e => { e.target.style.borderColor = C.border; e.target.style.boxShadow = 'none'; }}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPass(v => !v)}
+                    style={{ position: 'absolute', right: '12px', top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', color: C.muted, padding: 0 }}
+                  >
+                    {showPass ? <EyeOff size={16} /> : <Eye size={16} />}
+                  </button>
+                </div>
+              </div>
 
-            {/* Quick Access */}
-            <div style={{ padding: '16px', backgroundColor: C.bg, borderRadius: '12px', border: `1px solid ${C.border}` }}>
-              <p style={{ color: C.muted, fontSize: '10.5px', margin: '0 0 12px', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: '700' }}>
-                Quick Access
-              </p>
-              <div
-                onClick={() => setForm({ email: 'admin@zeex.com', password: 'admin1234' })}
+              {/* Submit */}
+              <button
+                onClick={handleAuth}
+                disabled={loading}
                 style={{
-                  padding: '10px 14px', backgroundColor: 'rgba(0,240,255,0.06)', borderRadius: '10px',
-                  cursor: 'pointer', border: `1px solid rgba(0,240,255,0.12)`,
-                  transition: 'all 0.15s',
+                  width: '100%', padding: '13px',
+                  background: loading ? `rgba(0,240,255,0.3)` : `linear-gradient(135deg, ${C.primaryDark}, ${C.primary})`,
+                  color: '#030712', border: 'none', borderRadius: '10px',
+                  fontSize: '15px', fontWeight: '800', cursor: loading ? 'not-allowed' : 'pointer',
+                  marginBottom: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
+                  boxShadow: loading ? 'none' : `0 0 20px rgba(0,240,255,0.3)`,
+                  transition: 'all 0.2s', fontFamily: 'inherit',
                 }}
-                onMouseEnter={e => { e.currentTarget.style.backgroundColor = 'rgba(0,240,255,0.12)'; }}
-                onMouseLeave={e => { e.currentTarget.style.backgroundColor = 'rgba(0,240,255,0.06)'; }}
+                onMouseEnter={e => { if (!loading) { e.currentTarget.style.boxShadow = `0 0 30px rgba(0,240,255,0.5)`; e.currentTarget.style.transform = 'translateY(-1px)'; } }}
+                onMouseLeave={e => { e.currentTarget.style.boxShadow = `0 0 20px rgba(0,240,255,0.3)`; e.currentTarget.style.transform = 'none'; }}
               >
-                <p style={{ color: C.primary, fontSize: '12.5px', fontWeight: '700', margin: '0 0 2px' }}>⚡ Super Admin</p>
-                <p style={{ color: C.muted2, fontSize: '11.5px', margin: 0 }}>admin@zeex.com · Click to autofill</p>
-              </div>
-            </div>
+                {loading ? (
+                  <>
+                    <span style={{ width: 14, height: 14, border: `2px solid #030712`, borderTopColor: 'transparent', borderRadius: '50%', display: 'inline-block', animation: 'spin 0.6s linear infinite' }} />
+                    Signing in...
+                  </>
+                ) : (
+                  <>Sign In <ArrowRight size={16} /></>
+                )}
+              </button>
 
+              {/* Quick Access */}
+              <div style={{ padding: '16px', backgroundColor: C.bg, borderRadius: '12px', border: `1px solid ${C.border}` }}>
+                <p style={{ color: C.muted, fontSize: '10.5px', margin: '0 0 12px', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: '700' }}>
+                  Quick Access
+                </p>
+                <div
+                  onClick={() => setForm({ email: 'admin@zeex.com', password: 'admin1234' })}
+                  style={{
+                    padding: '10px 14px', backgroundColor: 'rgba(0,240,255,0.06)', borderRadius: '10px',
+                    cursor: 'pointer', border: `1px solid rgba(0,240,255,0.12)`,
+                    transition: 'all 0.15s',
+                  }}
+                  onMouseEnter={e => { e.currentTarget.style.backgroundColor = 'rgba(0,240,255,0.12)'; }}
+                  onMouseLeave={e => { e.currentTarget.style.backgroundColor = 'rgba(0,240,255,0.06)'; }}
+                >
+                  <p style={{ color: C.primary, fontSize: '12.5px', fontWeight: '700', margin: '0 0 2px' }}>⚡ Super Admin</p>
+                  <p style={{ color: C.muted2, fontSize: '11.5px', margin: 0 }}>admin@zeex.com · Click to autofill</p>
+                </div>
+              </div>
+
+            </div>
           </div>
         </div>
       </div>
