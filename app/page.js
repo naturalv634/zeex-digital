@@ -52,11 +52,10 @@ export default function Home() {
     const t1 = setTimeout(() => setAnimPhase('walking_in'), 100);
     const t2 = setTimeout(() => setAnimPhase('grabbing'), 1400);
     const t3 = setTimeout(() => setAnimPhase('pulling'), 2000);
-    const t4 = setTimeout(() => setAnimPhase('releasing'), 3000);
-    const t5 = setTimeout(() => setAnimPhase('walking_out'), 3400);
-    const t6 = setTimeout(() => setAnimPhase('done'), 4600);
+    const t4 = setTimeout(() => setAnimPhase('waving'), 3000);
+    const t5 = setTimeout(() => setAnimPhase('done'), 5000);
     
-    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); clearTimeout(t4); clearTimeout(t5); clearTimeout(t6); };
+    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); clearTimeout(t4); clearTimeout(t5); };
   }, []);
 
   const handleAuth = async () => {
@@ -89,8 +88,9 @@ export default function Home() {
 
   // Determine character image based on phase
   let characterImage = '/3d-human/walk.png';
-  if (animPhase === 'grabbing' || animPhase === 'releasing') characterImage = '/3d-human/grab.png';
+  if (animPhase === 'grabbing') characterImage = '/3d-human/grab.png';
   if (animPhase === 'pulling') characterImage = '/3d-human/pull.png';
+  if (animPhase === 'waving' || animPhase === 'done') characterImage = '/3d-human/wave.png';
 
   return (
     <>
@@ -124,7 +124,7 @@ export default function Home() {
           background-color: ${C.card};
           position: relative;
           z-index: 1;
-          overflow: hidden;
+          /* overflow removed to allow character to enter from outside */
         }
 
         /* ── Robot + Form Animation Container ── */
@@ -151,43 +151,41 @@ export default function Home() {
 
         /* Character positioning states */
         .character-hidden {
-          right: -350px;
+          left: -400px; /* Starts in the center of the screen */
           top: 50%;
-          transform: translateY(-50%);
+          transform: translateY(-50%) scaleX(-1); /* Faces Right */
           opacity: 0;
         }
         .character-walking_in {
-          right: -80px;
+          left: 100px; /* Walks Right to the hidden form edge */
           top: 50%;
-          transform: translateY(-50%);
+          transform: translateY(-50%) scaleX(-1);
           opacity: 1;
         }
         .character-grabbing {
-          right: -80px;
+          left: 100px; /* At the form edge */
           top: 50%;
-          transform: translateY(-50%);
+          transform: translateY(-50%) scaleX(-1);
           opacity: 1;
         }
         .character-pulling {
-          right: 30px; /* Moves left with the form */
+          left: -120px; /* Pulls form back left to the center */
           top: 50%;
-          /* Slightly heavier transition for pulling weight */
           transition: transform 1s cubic-bezier(0.1, 0.9, 0.2, 1);
-          transform: translateY(-50%);
+          transform: translateY(-50%) scaleX(-1); /* Still facing right while pulling */
           opacity: 1;
         }
-        .character-releasing {
-          right: 30px;
+        .character-waving {
+          left: -120px; /* Stands next to form */
           top: 50%;
-          transform: translateY(-50%);
+          transform: translateY(-50%) scaleX(1); /* Turns to face front/left */
           opacity: 1;
         }
-        .character-walking_out {
-          right: -350px;
+        .character-done {
+          left: -120px;
           top: 50%;
-          /* Flip horizontally for walking away */
-          transform: translateY(-50%) scaleX(-1); 
-          opacity: 0;
+          transform: translateY(-50%) scaleX(1); 
+          opacity: 0; /* Fades out smoothly */
         }
 
         /* ── Form Slide Animation ── */
