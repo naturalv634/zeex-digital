@@ -19,94 +19,106 @@ const FEATURES = [
 const SERVICES = ['WordPress', 'React', 'Figma/UI', 'Mobile Apps', 'SEO', 'Video Editing', 'QA Testing', 'Content Writing'];
 
 /* ─────────────────────────────────────────────────────
-   Cartoon Robot Character (SVG)
-   A cute robot mascot that "pulls" the login form
+   Human Cartoon Mascot (SVG)
+   A stylized human character that "pulls" the login form
 ───────────────────────────────────────────────────── */
-function CartoonRobot({ phase }) {
+function HumanMascot({ phase }) {
   // phase: 'idle' | 'walking' | 'pulling' | 'done'
-  const armAngle = phase === 'pulling' ? -25 : 0;
-  const bodyBounce = (phase === 'walking') ? 'robot-walk' : (phase === 'pulling' ? 'robot-pull' : '');
+  
+  // Animation classes
+  const bodyBounce = (phase === 'walking') ? 'human-walk' : (phase === 'pulling' ? 'human-pull' : '');
+  const armAngle = phase === 'pulling' ? -15 : (phase === 'walking' ? 15 : 0);
+  const headAngle = phase === 'pulling' ? 10 : 0;
+  const legAngle = phase === 'walking' ? 20 : 0;
 
   return (
     <svg
-      className={`cartoon-robot ${bodyBounce}`}
-      viewBox="0 0 160 220"
+      className={`cartoon-human ${bodyBounce}`}
+      viewBox="0 0 200 280"
       xmlns="http://www.w3.org/2000/svg"
-      style={{ width: '120px', height: 'auto', overflow: 'visible' }}
+      style={{ width: '140px', height: 'auto', overflow: 'visible' }}
     >
       <defs>
-        <linearGradient id="robotBodyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stopColor="#A78BFA" />
-          <stop offset="100%" stopColor="#7C3AED" />
+        {/* Gradients for clothing and skin */}
+        <linearGradient id="hoodieGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#3B82F6" />
+          <stop offset="100%" stopColor="#1D4ED8" />
         </linearGradient>
-        <linearGradient id="robotFaceGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stopColor="#1E1B4B" />
-          <stop offset="100%" stopColor="#0F0A2A" />
+        <linearGradient id="pantsGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stopColor="#1E293B" />
+          <stop offset="100%" stopColor="#0F172A" />
         </linearGradient>
-        <filter id="robotGlow">
-          <feDropShadow dx="0" dy="3" stdDeviation="5" floodColor="#7C3AED" floodOpacity="0.4" />
+        <linearGradient id="skinGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#FCD34D" />
+          <stop offset="100%" stopColor="#F59E0B" />
+        </linearGradient>
+        <filter id="humanShadow" x="-20%" y="-20%" width="140%" height="140%">
+          <feDropShadow dx="2" dy="5" stdDeviation="4" floodColor="#000000" floodOpacity="0.3" />
         </filter>
       </defs>
 
-      {/* Antenna */}
-      <line x1="80" y1="8" x2="80" y2="28" stroke="#A78BFA" strokeWidth="3" strokeLinecap="round" />
-      <circle cx="80" cy="6" r="5" fill="#C084FC">
-        <animate attributeName="opacity" values="1;0.3;1" dur="1.5s" repeatCount="indefinite" />
-      </circle>
-
-      {/* Head */}
-      <rect x="40" y="28" width="80" height="60" rx="18" fill="url(#robotBodyGrad)" filter="url(#robotGlow)" />
-      {/* Face screen */}
-      <rect x="50" y="38" width="60" height="40" rx="10" fill="url(#robotFaceGrad)" />
-      {/* Eyes */}
-      <circle cx="68" cy="56" r="7" fill="#34D399">
-        <animate attributeName="r" values="7;5;7" dur="3s" repeatCount="indefinite" />
-      </circle>
-      <circle cx="92" cy="56" r="7" fill="#34D399">
-        <animate attributeName="r" values="7;5;7" dur="3s" repeatCount="indefinite" />
-      </circle>
-      {/* Eye shine */}
-      <circle cx="65" cy="53" r="2.5" fill="white" opacity="0.8" />
-      <circle cx="89" cy="53" r="2.5" fill="white" opacity="0.8" />
-      {/* Mouth */}
-      <rect x="65" y="66" width="30" height="4" rx="2" fill="#34D399" opacity="0.6" />
-
-      {/* Neck */}
-      <rect x="72" y="88" width="16" height="10" rx="4" fill="#6D28D9" />
-
-      {/* Body */}
-      <rect x="35" y="98" width="90" height="60" rx="16" fill="url(#robotBodyGrad)" filter="url(#robotGlow)" />
-      {/* Chest circle */}
-      <circle cx="80" cy="125" r="12" fill="#1E1B4B" stroke="#A78BFA" strokeWidth="2">
-        <animate attributeName="stroke-opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite" />
-      </circle>
-      {/* Power icon in chest */}
-      <text x="80" y="130" textAnchor="middle" fontSize="13" fill="#C084FC" fontWeight="bold">⚡</text>
-
-      {/* Left Arm (pulling arm - points toward form) */}
-      <g transform={`rotate(${armAngle}, 35, 108)`} style={{ transition: 'transform 0.5s ease' }}>
-        <rect x="8" y="102" width="27" height="14" rx="7" fill="#6D28D9" />
-        {/* Hand */}
-        <circle cx="10" cy="109" r="8" fill="#A78BFA" />
-        {/* Fingers */}
-        <rect x="0" y="104" width="8" height="4" rx="2" fill="#C084FC" />
-        <rect x="0" y="110" width="8" height="4" rx="2" fill="#C084FC" />
+      {/* Back Arm (Right Arm) */}
+      <g transform={`rotate(${armAngle * -0.5}, 100, 120)`} style={{ transition: 'transform 0.4s ease' }}>
+        <path d="M 120 120 Q 150 140 170 110" fill="none" stroke="#2563EB" strokeWidth="18" strokeLinecap="round" />
+        <circle cx="170" cy="110" r="10" fill="url(#skinGrad)" />
       </g>
 
-      {/* Right Arm */}
-      <rect x="125" y="102" width="27" height="14" rx="7" fill="#6D28D9" />
-      <circle cx="150" cy="109" r="8" fill="#A78BFA" />
+      {/* Back Leg (Right Leg) */}
+      <g transform={`rotate(${legAngle * -1}, 100, 180)`} style={{ transition: 'transform 0.3s ease' }}>
+        <path d="M 110 180 L 115 240" fill="none" stroke="url(#pantsGrad)" strokeWidth="22" strokeLinecap="round" />
+        {/* Shoe */}
+        <path d="M 105 240 L 135 240 A 10 10 0 0 1 135 255 L 105 255 Z" fill="#F8FAFC" filter="url(#humanShadow)" />
+      </g>
 
-      {/* Left Leg */}
-      <rect x="48" y="158" width="18" height="30" rx="8" fill="#6D28D9" />
-      <rect x="44" y="184" width="26" height="14" rx="6" fill="#A78BFA" />
+      {/* Body / Torso (Hoodie) */}
+      <path d="M 70 110 Q 100 90 130 110 L 125 180 Q 100 190 75 180 Z" fill="url(#hoodieGrad)" filter="url(#humanShadow)" />
+      
+      {/* Hoodie details (pocket, strings) */}
+      <path d="M 85 150 Q 100 140 115 150 L 110 170 L 90 170 Z" fill="#1E40AF" opacity="0.5" />
+      <path d="M 90 110 Q 95 130 92 140" fill="none" stroke="#60A5FA" strokeWidth="3" strokeLinecap="round" />
+      <path d="M 110 110 Q 105 130 108 140" fill="none" stroke="#60A5FA" strokeWidth="3" strokeLinecap="round" />
 
-      {/* Right Leg */}
-      <rect x="94" y="158" width="18" height="30" rx="8" fill="#6D28D9" />
-      <rect x="90" y="184" width="26" height="14" rx="6" fill="#A78BFA" />
+      {/* Head Group */}
+      <g transform={`rotate(${headAngle}, 100, 90)`} style={{ transition: 'transform 0.4s ease' }}>
+        {/* Neck */}
+        <rect x="92" y="85" width="16" height="20" fill="url(#skinGrad)" />
+        {/* Face */}
+        <circle cx="100" cy="65" r="28" fill="url(#skinGrad)" filter="url(#humanShadow)" />
+        {/* Hair / Cap */}
+        <path d="M 70 65 Q 100 20 130 65 Q 140 50 145 65 A 15 15 0 0 1 70 65 Z" fill="#1E293B" />
+        <path d="M 125 60 L 155 60 A 5 5 0 0 1 155 70 L 128 70 Z" fill="#1E293B" /> {/* Cap Bill */}
+        {/* Eye */}
+        <circle cx="115" cy="60" r="3.5" fill="#1E293B">
+           <animate attributeName="r" values="3.5;0.5;3.5" dur="4s" repeatCount="indefinite" />
+        </circle>
+        {/* Smile (determined approach) */}
+        <path d="M 115 75 Q 120 78 125 72" fill="none" stroke="#B45309" strokeWidth="2.5" strokeLinecap="round" />
+        {/* Ear */}
+        <circle cx="75" cy="65" r="6" fill="#F59E0B" />
+      </g>
+
+      {/* Front Leg (Left Leg) */}
+      <g transform={`rotate(${legAngle}, 100, 180)`} style={{ transition: 'transform 0.3s ease' }}>
+        <path d="M 90 180 L 85 240" fill="none" stroke="url(#pantsGrad)" strokeWidth="24" strokeLinecap="round" />
+        {/* Shoe */}
+        <path d="M 75 240 L 105 240 A 10 10 0 0 1 105 255 L 75 255 Z" fill="#F8FAFC" filter="url(#humanShadow)" />
+        <path d="M 85 248 L 100 248" fill="none" stroke="#CBD5E1" strokeWidth="2" strokeLinecap="round" /> {/* Shoe detail */}
+      </g>
+
+      {/* Front Arm (Left Arm, reaching/pulling) */}
+      <g transform={`rotate(${armAngle}, 100, 115)`} style={{ transition: 'transform 0.4s ease' }}>
+        {/* Sleeve */}
+        <path d="M 95 115 Q 140 130 175 105" fill="none" stroke="url(#hoodieGrad)" strokeWidth="20" strokeLinecap="round" filter="url(#humanShadow)" />
+        {/* Hand */}
+        <circle cx="175" cy="105" r="11" fill="url(#skinGrad)" />
+        {/* Fingers grabbing */}
+        <path d="M 175 95 Q 185 100 182 110" fill="none" stroke="#D97706" strokeWidth="2" strokeLinecap="round" />
+      </g>
+
     </svg>
   );
 }
+
 
 export default function Home() {
   const router = useRouter();
@@ -157,8 +169,8 @@ export default function Home() {
 
   const handleKey = (e) => { if (e.key === 'Enter') handleAuth(); };
 
-  // Determine robot visual phase
-  const robotPhase =
+  // Determine character visual phase
+  const characterPhase =
     animPhase === 'pulling' ? 'pulling' :
     animPhase === 'robotEnter' ? 'walking' :
     'idle';
@@ -204,37 +216,37 @@ export default function Home() {
           width: 100%;
         }
 
-        /* ── Robot Animation ── */
-        .robot-container {
+        /* ── Character Animation ── */
+        .character-container {
           position: absolute;
           z-index: 10;
           transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
           pointer-events: none;
         }
 
-        /* Desktop: robot enters from right side */
-        .robot-waiting {
+        /* Desktop: character enters from right side */
+        .character-waiting {
           right: -180px;
           top: 50%;
           transform: translateY(-50%);
           opacity: 0;
         }
-        .robot-enter {
+        .character-enter {
           right: -60px;
           top: 50%;
           transform: translateY(-50%);
           opacity: 1;
         }
-        .robot-pulling {
-          right: -40px;
+        .character-pulling {
+          right: -20px;
           top: 50%;
           transform: translateY(-50%) scaleX(-1);
           opacity: 1;
         }
-        .robot-done {
-          right: -50px;
-          top: -10px;
-          transform: scale(0.55);
+        .character-done {
+          right: -30px;
+          top: -20px;
+          transform: scale(0.65);
           opacity: 1;
         }
 
@@ -360,28 +372,6 @@ export default function Home() {
           /* Mobile: robot comes from top */
           .robot-waiting {
             right: auto;
-            left: 50%;
-            top: -180px;
-            transform: translateX(-50%);
-          }
-          .robot-enter {
-            right: auto;
-            left: 50%;
-            top: -120px;
-            transform: translateX(-50%);
-          }
-          .robot-pulling {
-            right: auto;
-            left: 50%;
-            top: -110px;
-            transform: translateX(-50%);
-          }
-          .robot-done {
-            right: auto;
-            left: 50%;
-            top: -70px;
-            transform: translateX(-50%) scale(0.5);
-          }
           .form-hidden {
             transform: translateY(80px);
           }
@@ -472,18 +462,14 @@ export default function Home() {
         <div className="landing-form-side">
           <div className="form-animation-wrapper">
 
-            {/* ── Robot Character ── */}
-            <div className={`robot-container robot-${
+            {/* ── Human Cartoon Character ── */}
+            <div className={`character-container character-${
               animPhase === 'waiting' ? 'waiting' :
               animPhase === 'robotEnter' ? 'enter' :
               animPhase === 'pulling' ? 'pulling' :
               'done'
             }`}>
-              {/* Speech bubble */}
-              <div className={`robot-speech ${animPhase === 'robotEnter' || animPhase === 'pulling' ? 'show' : ''}`}>
-                {animPhase === 'pulling' ? '🔥 Almost there!' : '👋 Let me help!'}
-              </div>
-              <CartoonRobot phase={robotPhase} />
+              <HumanMascot phase={characterPhase} />
             </div>
 
             {/* ── Pull Rope ── */}
