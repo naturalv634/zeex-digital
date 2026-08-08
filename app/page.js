@@ -19,105 +19,10 @@ const FEATURES = [
 const SERVICES = ['WordPress', 'React', 'Figma/UI', 'Mobile Apps', 'SEO', 'Video Editing', 'QA Testing', 'Content Writing'];
 
 /* ─────────────────────────────────────────────────────
-   Human Cartoon Mascot (SVG)
-   A stylized human character that "pulls" the login form
+   3D Character Asset Loader
+   Loads frames from /public/3d-human/
 ───────────────────────────────────────────────────── */
-function HumanMascot({ phase }) {
-  // phase: 'idle' | 'walking' | 'pulling' | 'done'
-  
-  // Animation classes
-  const bodyBounce = (phase === 'walking') ? 'human-walk' : (phase === 'pulling' ? 'human-pull' : '');
-  const armAngle = phase === 'pulling' ? -15 : (phase === 'walking' ? 15 : 0);
-  const headAngle = phase === 'pulling' ? 10 : 0;
-  const legAngle = phase === 'walking' ? 20 : 0;
-
-  return (
-    <svg
-      className={`cartoon-human ${bodyBounce}`}
-      viewBox="0 0 200 280"
-      xmlns="http://www.w3.org/2000/svg"
-      style={{ width: '140px', height: 'auto', overflow: 'visible' }}
-    >
-      <defs>
-        {/* Gradients for clothing and skin */}
-        <linearGradient id="hoodieGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#3B82F6" />
-          <stop offset="100%" stopColor="#1D4ED8" />
-        </linearGradient>
-        <linearGradient id="pantsGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stopColor="#1E293B" />
-          <stop offset="100%" stopColor="#0F172A" />
-        </linearGradient>
-        <linearGradient id="skinGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#FCD34D" />
-          <stop offset="100%" stopColor="#F59E0B" />
-        </linearGradient>
-        <filter id="humanShadow" x="-20%" y="-20%" width="140%" height="140%">
-          <feDropShadow dx="2" dy="5" stdDeviation="4" floodColor="#000000" floodOpacity="0.3" />
-        </filter>
-      </defs>
-
-      {/* Back Arm (Right Arm) */}
-      <g transform={`rotate(${armAngle * -0.5}, 100, 120)`} style={{ transition: 'transform 0.4s ease' }}>
-        <path d="M 120 120 Q 150 140 170 110" fill="none" stroke="#2563EB" strokeWidth="18" strokeLinecap="round" />
-        <circle cx="170" cy="110" r="10" fill="url(#skinGrad)" />
-      </g>
-
-      {/* Back Leg (Right Leg) */}
-      <g transform={`rotate(${legAngle * -1}, 100, 180)`} style={{ transition: 'transform 0.3s ease' }}>
-        <path d="M 110 180 L 115 240" fill="none" stroke="url(#pantsGrad)" strokeWidth="22" strokeLinecap="round" />
-        {/* Shoe */}
-        <path d="M 105 240 L 135 240 A 10 10 0 0 1 135 255 L 105 255 Z" fill="#F8FAFC" filter="url(#humanShadow)" />
-      </g>
-
-      {/* Body / Torso (Hoodie) */}
-      <path d="M 70 110 Q 100 90 130 110 L 125 180 Q 100 190 75 180 Z" fill="url(#hoodieGrad)" filter="url(#humanShadow)" />
-      
-      {/* Hoodie details (pocket, strings) */}
-      <path d="M 85 150 Q 100 140 115 150 L 110 170 L 90 170 Z" fill="#1E40AF" opacity="0.5" />
-      <path d="M 90 110 Q 95 130 92 140" fill="none" stroke="#60A5FA" strokeWidth="3" strokeLinecap="round" />
-      <path d="M 110 110 Q 105 130 108 140" fill="none" stroke="#60A5FA" strokeWidth="3" strokeLinecap="round" />
-
-      {/* Head Group */}
-      <g transform={`rotate(${headAngle}, 100, 90)`} style={{ transition: 'transform 0.4s ease' }}>
-        {/* Neck */}
-        <rect x="92" y="85" width="16" height="20" fill="url(#skinGrad)" />
-        {/* Face */}
-        <circle cx="100" cy="65" r="28" fill="url(#skinGrad)" filter="url(#humanShadow)" />
-        {/* Hair / Cap */}
-        <path d="M 70 65 Q 100 20 130 65 Q 140 50 145 65 A 15 15 0 0 1 70 65 Z" fill="#1E293B" />
-        <path d="M 125 60 L 155 60 A 5 5 0 0 1 155 70 L 128 70 Z" fill="#1E293B" /> {/* Cap Bill */}
-        {/* Eye */}
-        <circle cx="115" cy="60" r="3.5" fill="#1E293B">
-           <animate attributeName="r" values="3.5;0.5;3.5" dur="4s" repeatCount="indefinite" />
-        </circle>
-        {/* Smile (determined approach) */}
-        <path d="M 115 75 Q 120 78 125 72" fill="none" stroke="#B45309" strokeWidth="2.5" strokeLinecap="round" />
-        {/* Ear */}
-        <circle cx="75" cy="65" r="6" fill="#F59E0B" />
-      </g>
-
-      {/* Front Leg (Left Leg) */}
-      <g transform={`rotate(${legAngle}, 100, 180)`} style={{ transition: 'transform 0.3s ease' }}>
-        <path d="M 90 180 L 85 240" fill="none" stroke="url(#pantsGrad)" strokeWidth="24" strokeLinecap="round" />
-        {/* Shoe */}
-        <path d="M 75 240 L 105 240 A 10 10 0 0 1 105 255 L 75 255 Z" fill="#F8FAFC" filter="url(#humanShadow)" />
-        <path d="M 85 248 L 100 248" fill="none" stroke="#CBD5E1" strokeWidth="2" strokeLinecap="round" /> {/* Shoe detail */}
-      </g>
-
-      {/* Front Arm (Left Arm, reaching/pulling) */}
-      <g transform={`rotate(${armAngle}, 100, 115)`} style={{ transition: 'transform 0.4s ease' }}>
-        {/* Sleeve */}
-        <path d="M 95 115 Q 140 130 175 105" fill="none" stroke="url(#hoodieGrad)" strokeWidth="20" strokeLinecap="round" filter="url(#humanShadow)" />
-        {/* Hand */}
-        <circle cx="175" cy="105" r="11" fill="url(#skinGrad)" />
-        {/* Fingers grabbing */}
-        <path d="M 175 95 Q 185 100 182 110" fill="none" stroke="#D97706" strokeWidth="2" strokeLinecap="round" />
-      </g>
-
-    </svg>
-  );
-}
+// SVG removed. We use <img> tags to load real 3D assets.
 
 
 export default function Home() {
@@ -129,16 +34,29 @@ export default function Home() {
   const [mounted, setMounted] = useState(false);
 
   // Animation phases
-  const [animPhase, setAnimPhase] = useState('waiting'); // waiting -> robotEnter -> pulling -> formVisible -> done
+  const [animPhase, setAnimPhase] = useState('hidden'); 
+  const [useAnimation, setUseAnimation] = useState(true);
 
   useEffect(() => {
     setMounted(true);
-    // Start animation sequence
-    const t1 = setTimeout(() => setAnimPhase('robotEnter'), 400);
-    const t2 = setTimeout(() => setAnimPhase('pulling'), 1600);
-    const t3 = setTimeout(() => setAnimPhase('formVisible'), 2400);
-    const t4 = setTimeout(() => setAnimPhase('done'), 3200);
-    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); clearTimeout(t4); };
+    
+    // Check for prefers-reduced-motion
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (mediaQuery.matches) {
+      setUseAnimation(false);
+      setAnimPhase('done');
+      return;
+    }
+
+    // Start 3D Character animation sequence
+    const t1 = setTimeout(() => setAnimPhase('walking_in'), 100);
+    const t2 = setTimeout(() => setAnimPhase('grabbing'), 1400);
+    const t3 = setTimeout(() => setAnimPhase('pulling'), 2000);
+    const t4 = setTimeout(() => setAnimPhase('releasing'), 3000);
+    const t5 = setTimeout(() => setAnimPhase('walking_out'), 3400);
+    const t6 = setTimeout(() => setAnimPhase('done'), 4600);
+    
+    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); clearTimeout(t4); clearTimeout(t5); clearTimeout(t6); };
   }, []);
 
   const handleAuth = async () => {
@@ -169,11 +87,10 @@ export default function Home() {
 
   const handleKey = (e) => { if (e.key === 'Enter') handleAuth(); };
 
-  // Determine character visual phase
-  const characterPhase =
-    animPhase === 'pulling' ? 'pulling' :
-    animPhase === 'robotEnter' ? 'walking' :
-    'idle';
+  // Determine character image based on phase
+  let characterImage = '/3d-human/walk.png';
+  if (animPhase === 'grabbing' || animPhase === 'releasing') characterImage = '/3d-human/grab.png';
+  if (animPhase === 'pulling') characterImage = '/3d-human/pull.png';
 
   return (
     <>
@@ -216,138 +133,83 @@ export default function Home() {
           width: 100%;
         }
 
-        /* ── Character Animation ── */
+        /* ── 3D Character Animation ── */
         .character-container {
           position: absolute;
           z-index: 10;
-          transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
           pointer-events: none;
+          /* Base transition for walking/moving */
+          transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.4s ease;
+        }
+        
+        .character-container img {
+          width: 320px;
+          height: auto;
+          mix-blend-mode: screen; /* AI generated image has black bg, screen mode hides it */
+          filter: drop-shadow(0 20px 30px rgba(0,0,0,0.5));
         }
 
-        /* Desktop: character enters from right side */
-        .character-waiting {
-          right: -180px;
+        /* Character positioning states */
+        .character-hidden {
+          right: -350px;
           top: 50%;
           transform: translateY(-50%);
           opacity: 0;
         }
-        .character-enter {
-          right: -60px;
+        .character-walking_in {
+          right: -80px;
+          top: 50%;
+          transform: translateY(-50%);
+          opacity: 1;
+        }
+        .character-grabbing {
+          right: -80px;
           top: 50%;
           transform: translateY(-50%);
           opacity: 1;
         }
         .character-pulling {
-          right: -20px;
+          right: 30px; /* Moves left with the form */
           top: 50%;
-          transform: translateY(-50%) scaleX(-1);
+          /* Slightly heavier transition for pulling weight */
+          transition: transform 1s cubic-bezier(0.1, 0.9, 0.2, 1);
+          transform: translateY(-50%);
           opacity: 1;
         }
-        .character-done {
-          right: -30px;
-          top: -20px;
-          transform: scale(0.65);
+        .character-releasing {
+          right: 30px;
+          top: 50%;
+          transform: translateY(-50%);
           opacity: 1;
+        }
+        .character-walking_out {
+          right: -350px;
+          top: 50%;
+          /* Flip horizontally for walking away */
+          transform: translateY(-50%) scaleX(-1); 
+          opacity: 0;
         }
 
         /* ── Form Slide Animation ── */
         .login-form-content {
-          transition: all 0.9s cubic-bezier(0.34, 1.56, 0.64, 1);
+          /* Match the pulling transition of the character exactly */
+          transition: transform 1s cubic-bezier(0.1, 0.9, 0.2, 1), opacity 0.5s ease;
         }
+        
         .form-hidden {
           opacity: 0;
-          transform: translateX(120%);
+          transform: translateX(150%);
         }
         .form-pulling {
-          opacity: 0.4;
-          transform: translateX(40%);
+          opacity: 1;
+          transform: translateX(0);
+          /* Add subtle lift shadow while being pulled */
+          filter: drop-shadow(-20px 0 40px rgba(0,114,255,0.15));
         }
         .form-visible {
           opacity: 1;
           transform: translateX(0);
-        }
-
-        /* ── Robot Walking Animation ── */
-        @keyframes robotWalkBounce {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-8px); }
-        }
-        .robot-walk .cartoon-robot {
-          animation: robotWalkBounce 0.4s ease-in-out infinite;
-        }
-
-        /* ── Robot Pulling Animation ── */
-        @keyframes robotPullStrain {
-          0%, 100% { transform: translateX(0) rotate(0deg); }
-          25% { transform: translateX(-6px) rotate(-3deg); }
-          75% { transform: translateX(4px) rotate(2deg); }
-        }
-        .robot-pull .cartoon-robot {
-          animation: robotPullStrain 0.3s ease-in-out infinite;
-        }
-
-        /* ── "Let me help!" speech bubble ── */
-        .robot-speech {
-          position: absolute;
-          background: rgba(124, 58, 237, 0.9);
-          color: white;
-          padding: 8px 14px;
-          border-radius: 12px;
-          font-size: 11px;
-          font-weight: 700;
-          white-space: nowrap;
-          opacity: 0;
-          transition: opacity 0.4s;
-          pointer-events: none;
-          top: -16px;
-          right: 40px;
-        }
-        .robot-speech::after {
-          content: '';
-          position: absolute;
-          bottom: -6px;
-          right: 20px;
-          width: 0;
-          height: 0;
-          border-left: 6px solid transparent;
-          border-right: 6px solid transparent;
-          border-top: 8px solid rgba(124, 58, 237, 0.9);
-        }
-        .robot-speech.show {
-          opacity: 1;
-        }
-
-        /* ── Rope/cord visual connecting robot to form ── */
-        .pull-rope {
-          position: absolute;
-          top: 50%;
-          right: 0;
-          width: 0;
-          height: 3px;
-          background: linear-gradient(90deg, #7C3AED, #C084FC);
-          border-radius: 2px;
-          transition: width 0.5s ease;
-          z-index: 5;
-          opacity: 0;
-        }
-        .pull-rope.active {
-          width: 80px;
-          opacity: 1;
-        }
-
-        /* ── Sparkle particles when form appears ── */
-        @keyframes sparkle {
-          0% { opacity: 0; transform: scale(0) rotate(0deg); }
-          50% { opacity: 1; transform: scale(1) rotate(180deg); }
-          100% { opacity: 0; transform: scale(0) rotate(360deg); }
-        }
-        .sparkle-particle {
-          position: absolute;
-          width: 8px;
-          height: 8px;
-          border-radius: 50%;
-          pointer-events: none;
-          animation: sparkle 0.8s ease forwards;
+          filter: none;
         }
 
         @media (max-width: 768px) {
@@ -463,38 +325,17 @@ export default function Home() {
           <div className="form-animation-wrapper">
 
             {/* ── Human Cartoon Character ── */}
-            <div className={`character-container character-${
-              animPhase === 'waiting' ? 'waiting' :
-              animPhase === 'robotEnter' ? 'enter' :
-              animPhase === 'pulling' ? 'pulling' :
-              'done'
-            }`}>
-              <HumanMascot phase={characterPhase} />
-            </div>
-
-            {/* ── Pull Rope ── */}
-            <div className={`pull-rope ${animPhase === 'pulling' ? 'active' : ''}`} />
-
-            {/* ── Sparkle particles when form appears ── */}
-            {animPhase === 'formVisible' && (
-              <>
-                {[
-                  { top: '10%', left: '5%', bg: '#C084FC', delay: '0s' },
-                  { top: '20%', right: '10%', bg: '#34D399', delay: '0.1s' },
-                  { top: '80%', left: '15%', bg: '#7C3AED', delay: '0.2s' },
-                  { top: '60%', right: '8%', bg: '#A78BFA', delay: '0.15s' },
-                  { top: '40%', left: '80%', bg: '#34D399', delay: '0.25s' },
-                  { top: '5%', left: '50%', bg: '#C084FC', delay: '0.05s' },
-                ].map((s, i) => (
-                  <div key={i} className="sparkle-particle" style={{ ...s, animationDelay: s.delay }} />
-                ))}
-              </>
+            {animPhase !== 'done' && useAnimation && (
+              <div className={`character-container character-${animPhase}`}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={characterImage} alt="3D Character" />
+              </div>
             )}
 
             {/* ── Login Form ── */}
             <div className={`login-form-content ${
-              animPhase === 'waiting' || animPhase === 'robotEnter' ? 'form-hidden' :
-              animPhase === 'pulling' ? 'form-pulling' :
+              (animPhase === 'hidden' || animPhase === 'walking_in' || animPhase === 'grabbing') && useAnimation ? 'form-hidden' :
+              animPhase === 'pulling' && useAnimation ? 'form-pulling' :
               'form-visible'
             }`}>
 
