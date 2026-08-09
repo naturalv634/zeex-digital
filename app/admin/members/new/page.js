@@ -19,7 +19,8 @@ const DEPARTMENTS = ['Development', 'Design', 'Marketing', 'SEO', 'Content', 'QA
 
 const ROLES = [
   { value: 'member',  label: 'Team Member',     icon: User,        color: C.blue   },
-  { value: 'client',  label: 'Client',           icon: Briefcase,   color: C.green  },
+  { value: 'editor',  label: 'Editor',          icon: ShieldCheck, color: C.purple },
+  { value: 'client',  label: 'Client',          icon: Briefcase,   color: C.green  },
 ];
 
 const INPUT = {

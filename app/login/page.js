@@ -23,6 +23,7 @@ export default function Login() {
         localStorage.setItem('token', data.token);
         localStorage.setItem('user', JSON.stringify(data.user));
         if (data.user.role === 'admin') router.push('/admin/dashboard');
+        else if (data.user.role === 'editor') router.push('/editor/projects');
         else if (data.user.role === 'member') router.push(`/member/${data.user.id}/dashboard`);
         else router.push(`/client/${data.user.id}/dashboard`);
       } else {
