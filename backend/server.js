@@ -260,7 +260,7 @@ app.post('/api/auth/change-password', async (req, res) => {
 
 app.get('/api/members', async (req, res) => {
   try {
-    const result = await pool.query("SELECT * FROM users WHERE role = 'member' ORDER BY created_at DESC");
+    const result = await pool.query("SELECT * FROM users WHERE role IN ('member', 'editor') ORDER BY created_at DESC");
     res.json(result.rows);
   } catch (err) {
     res.status(500).json({ error: err.message });

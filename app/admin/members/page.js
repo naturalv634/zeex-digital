@@ -157,7 +157,7 @@ export default function Members() {
             const ac  = member.avatar_color || AVATAR_COLORS[idx % AVATAR_COLORS.length];
             const pct = ms.total > 0 ? Math.round((ms.completed / ms.total) * 100) : 0;
             return (
-              <div key={member.id} className="hover-lift" style={{ backgroundColor: C.card, border: `1px solid ${C.border}`, borderRadius: '18px', padding: '24px', display: 'flex', flexDirection: 'column' }}>
+              <div key={member.id} className="hover-lift" style={{ backgroundColor: C.card, border: `1px solid ${C.border}`, borderRadius: '18px', padding: '24px', display: 'flex', flexDirection: 'column', position: 'relative' }}>
 
                 {/* Avatar + Status */}
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '16px' }}>
@@ -212,14 +212,24 @@ export default function Members() {
 
                 {/* Actions */}
                 <div style={{ display: 'flex', gap: '8px', marginTop: 'auto' }}>
-                  <a href={`/member/${member.id}/dashboard`} style={{
+                  {/* Editor role badge */}
+                  {member.role === 'editor' && (
+                    <span style={{
+                      position: 'absolute', top: '16px', right: '16px',
+                      backgroundColor: 'rgba(157,78,221,0.15)', color: C.purple,
+                      fontSize: '10px', padding: '3px 8px', borderRadius: '20px', fontWeight: '800',
+                      border: `1px solid rgba(157,78,221,0.25)`, letterSpacing: '0.5px',
+                    }}>EDITOR</span>
+                  )}
+                  <a href={member.role === 'editor' ? `/editor/projects` : `/member/${member.id}/dashboard`} style={{
                     flex: 1, padding: '9px', textAlign: 'center',
-                    backgroundColor: 'rgba(0,214,143,0.1)', color: C.green,
+                    backgroundColor: member.role === 'editor' ? 'rgba(157,78,221,0.1)' : 'rgba(0,214,143,0.1)',
+                    color: member.role === 'editor' ? C.purple : C.green,
                     borderRadius: '10px', fontSize: '12.5px', fontWeight: '700',
-                    border: `1px solid rgba(0,214,143,0.2)`,
+                    border: `1px solid ${member.role === 'editor' ? 'rgba(157,78,221,0.2)' : 'rgba(0,214,143,0.2)'}`,
                     display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '5px',
                   }}>
-                    <ExternalLink size={12.5} /> Dashboard
+                    <ExternalLink size={12.5} /> {member.role === 'editor' ? 'Editor View' : 'Dashboard'}
                   </a>
                   <button onClick={() => deleteMember(member.id, member.name)} style={{
                     padding: '9px 12px', backgroundColor: 'rgba(255,107,107,0.08)', color: C.red,
