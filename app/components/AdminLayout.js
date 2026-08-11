@@ -6,7 +6,7 @@ import {
   LayoutDashboard, FolderKanban, Users, Handshake, CheckSquare,
   Bell, Settings, Search, CalendarDays, ChevronDown, X,
   FolderKanban as FolderIcon, LogOut, Menu, Sparkles,
-  Clock, FileText, BarChart2, Camera,
+  Clock, FileText, BarChart2, Camera, Pencil,
 } from 'lucide-react';
 import ToastContainer from './Toast';
 import Logo from './Logo';
@@ -16,6 +16,7 @@ const NAV_ITEMS = [
   { icon: LayoutDashboard, label: 'Dashboard',     path: '/admin/dashboard' },
   { icon: FolderKanban,    label: 'Projects',      path: '/admin/projects'  },
   { icon: Users,           label: 'Team Members',  path: '/admin/members'   },
+  { icon: Pencil,          label: 'Editors',       path: '/admin/editors'   },
   { icon: Handshake,       label: 'Clients',       path: '/admin/clients'   },
   { icon: CheckSquare,     label: 'Tasks',         path: '/admin/tasks'     },
   { icon: CalendarDays,    label: 'Calendar',      path: '/admin/calendar'  },
